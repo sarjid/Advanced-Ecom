@@ -3,6 +3,7 @@ use App\Http\Controllers\Fontend\IndexController;
 use App\Http\Controllers\User\UserController;
 Use App\Http\Controllers\Admin\AdminController;
 Use App\Http\Controllers\Admin\BrandController;
+Use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +36,21 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     Route::post('image/store',[AdminController::class,'imgStore'])->name('store-image');
     Route::get('change-password',[AdminController::class,'changePass'])->name('change-password');
     Route::post('change-password-store',[AdminController::class,'changePassStore'])->name('change-password-store');
+    //brand routes
     Route::get('all-brands',[BrandController::class,'index'])->name('brands');
+    Route::post('brand/store',[BrandController::class,'brandStore'])->name('brand-store');
+    Route::get('/brand-edit/{brand_id}',[BrandController::class,'edit']);
+    Route::post('brand/update',[BrandController::class,'brandUpdate'])->name('update-brand');
+    Route::get('/brand-delete/{brand_id}',[BrandController::class,'delete']);
+    //category 
+    Route::get('category',[CategoryController::class,'index'])->name('category');
+    Route::post('category/store',[CategoryController::class,'categoryStore'])->name('category-store');
+    Route::get('/category-edit/{cat_id}',[CategoryController::class,'edit']);
+    Route::post('category/update',[CategoryController::class,'catUpdate'])->name('update-category');
+    Route::get('/category-delete/{cat_id}',[CategoryController::class,'delete']);
+
+
+   
 });
 
 // ====================================== User Routes =====================================

@@ -35,9 +35,19 @@
     <link href="{{ asset('backend') }}/lib/Ionicons/css/ionicons.css" rel="stylesheet">
     <link href="{{ asset('backend') }}/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
     <link href="{{ asset('backend') }}/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+    <link href="{{ asset('backend') }}/lib/highlightjs/github.css" rel="stylesheet">
+    <link href="{{ asset('backend') }}/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="{{ asset('backend') }}/lib/select2/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('backend')}}/lib/toastr/toastr.css">
+    <link href="{{ asset('backend') }}/lib/medium-editor/medium-editor.css" rel="stylesheet">
+    <link href="{{ asset('backend') }}/lib/medium-editor/default.css" rel="stylesheet">
+    <link href="{{ asset('backend') }}/lib/summernote/summernote-bs4.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('backend')}}/lib/bootstrap-tagsinput.css" crossorigin="anonymous">
+    <link href="{{ asset('backend') }}/lib/spectrum/spectrum.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <!-- Starlight CSS -->
     <link rel="stylesheet" href="{{ asset('backend') }}/css/starlight.css">
+    
   </head>
 
   <body>
@@ -249,6 +259,33 @@
     <script src="{{ asset('backend') }}/lib/bootstrap/bootstrap.js"></script>
     <script src="{{ asset('backend') }}/lib/jquery-ui/jquery-ui.js"></script>
     <script src="{{ asset('backend') }}/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="{{ asset('backend') }}/lib/datatables/jquery.dataTables.js"></script>
+    <script src="{{ asset('backend') }}/lib/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="{{ asset('backend') }}/lib/select2/js/select2.min.js"></script>
+    <script>
+      $(function(){
+        'use strict';
+
+        $('#datatable1').DataTable({
+          responsive: true,
+          language: {
+            searchPlaceholder: 'Search...',
+            sSearch: '',
+            lengthMenu: '_MENU_ items/page',
+          }
+        });
+
+        // $('#datatable2').DataTable({
+        //   bLengthChange: false,
+        //   searching: false,
+        //   responsive: true
+        // });
+
+        // // Select2
+        // $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+
+      });
+    </script>
     <script src="{{ asset('backend') }}/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
     <script src="{{ asset('backend') }}/lib/d3/d3.js"></script>
     <script src="{{ asset('backend') }}/lib/rickshaw/rickshaw.min.js"></script>
@@ -284,6 +321,31 @@
                 break;
         }
     @endif
+    </script>
+
+<script src="{{ asset('backend') }}/lib/sweetalert/sweetalert.min.js"></script>
+    <script>
+      $(document).on("click", "#delete", function(e){
+    e.preventDefault();
+    var link = $(this).attr("href");
+
+    swal({
+          title: "Are you sure To Delete?",
+          text: "Once deleted, you will not be able to recover this imaginary file!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+          })
+          .then((willDelete) => {
+          if (willDelete) {
+              window.location.href = link;
+
+          } else {
+              swal("Your imaginary file is safe!");
+          }
+
+      });
+});
     </script>
   </body>
 </html>
