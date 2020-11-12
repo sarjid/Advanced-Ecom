@@ -1,11 +1,8 @@
 @extends('layouts.admin-master')
-@section('categories')
-    active show-sub
-@endsection
-@section('add-category')
-    active 
-@endsection
 @section('admin-content')
+@section('categories') active show-sub @endsection
+@section('add-category') active @endsection
+
      <!-- ########## START: MAIN PANEL ########## -->
      <div class="sl-mainpanel">
         <nav class="breadcrumb sl-breadcrumb">
@@ -89,6 +86,7 @@
             </div>
           </div>
         </div>
-
-
     </div>
+
+    @endsection
+
