@@ -4,6 +4,7 @@ use App\Http\Controllers\User\UserController;
 Use App\Http\Controllers\Admin\AdminController;
 Use App\Http\Controllers\Admin\BrandController;
 Use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,9 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
      Route::get('sub-sub-category-edit/{subsubcat_id}',[CategoryController::class,'subSubEdit']);
      Route::post('sub-subcategory/update',[CategoryController::class,'subSubCatUpdate'])->name('update-sub-subcategory');
      Route::get('sub-sub-category-delete/{subsubcat_id}',[CategoryController::class,'subSubDelete']);
+
+     //Product 
+     Route::get('add-product',[ProductController::class,'addProduct'])->name('add-product');
    
    
 });
