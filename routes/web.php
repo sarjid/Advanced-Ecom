@@ -1,10 +1,12 @@
 <?php
 use App\Http\Controllers\Fontend\IndexController;
+use App\Http\Controllers\Fontend\LanguageController;
 use App\Http\Controllers\User\UserController;
 Use App\Http\Controllers\Admin\AdminController;
 Use App\Http\Controllers\Admin\BrandController;
 Use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SliderController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,26 +45,26 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     Route::get('brand-edit/{brand_id}',[BrandController::class,'edit']);
     Route::post('brand/update',[BrandController::class,'brandUpdate'])->name('update-brand');
     Route::get('/brand-delete/{brand_id}',[BrandController::class,'delete']);
-    //category 
+    //category
     Route::get('category',[CategoryController::class,'index'])->name('category');
     Route::post('category/store',[CategoryController::class,'categoryStore'])->name('category-store');
     Route::get('/category-edit/{cat_id}',[CategoryController::class,'edit']);
     Route::post('category/update',[CategoryController::class,'catUpdate'])->name('update-category');
     Route::get('/category-delete/{cat_id}',[CategoryController::class,'delete']);
-    //subcategory 
+    //subcategory
     Route::get('sub-category',[CategoryController::class,'subIndex'])->name('sub-category');
     Route::post('sub-category/store',[CategoryController::class,'subCategoryStore'])->name('subcategory-store');
     Route::get('sub-category-edit/{subcat_id}',[CategoryController::class,'subEdit']);
     Route::post('sub-category/update',[CategoryController::class,'subCatUpdate'])->name('update-sub-category');
     Route::get('sub-category-delete/{subcat_id}',[CategoryController::class,'subDelete']);
-     //sub-subcategory 
+     //sub-subcategory
      Route::get('sub-sub-category',[CategoryController::class,'subSubIndex'])->name('sub-sub-category');
      Route::get('subcategory/ajax/{cat_id}',[CategoryController::class,'getSubCat']);
      Route::post('sub-sub-category/store',[CategoryController::class,'subSubCategoryStore'])->name('sub-subcategory-store');
      Route::get('sub-sub-category-edit/{subsubcat_id}',[CategoryController::class,'subSubEdit']);
      Route::post('sub-subcategory/update',[CategoryController::class,'subSubCatUpdate'])->name('update-sub-subcategory');
      Route::get('sub-sub-category-delete/{subsubcat_id}',[CategoryController::class,'subSubDelete']);
-     //Product 
+     //Product
      Route::get('add-product',[ProductController::class,'addProduct'])->name('add-product');
      Route::post('product/store',[ProductController::class,'store'])->name('store-product');
      Route::get('sub-subcategory/ajax/{subcat_id}',[ProductController::class,'getSubSubCat']);
@@ -75,7 +77,14 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     Route::get('product/multiimg/delete/{id}',[ProductController::class,'multiImageDelete']);
     Route::get('product-inactive/{id}',[ProductController::class,'inactive']);
     Route::get('product-active/{id}',[ProductController::class,'active']);
-
+    //sliders
+    Route::get('slider',[SliderController::class,'index'])->name('sliders');
+    Route::post('slider/store',[SliderController::class,'store'])->name('slider-store');
+    Route::get('slider-edit/{id}',[SliderController::class,'edit']);
+    Route::post('slider/update',[SliderController::class,'update'])->name('update-slider');
+    Route::get('slider/delete/{id}',[SliderController::class,'destroy']);
+    Route::get('slider-inactive/{id}',[SliderController::class,'inactive']);
+    Route::get('slider-active/{id}',[SliderController::class,'active']);
 });
 
 // ====================================== User Routes =====================================
@@ -89,4 +98,5 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
 });
 
 // ====================================== Fontend Routes =====================================
-
+Route::get('language/bangla',[LanguageController::class,'bangla'])->name('bangla.language');
+Route::get('language/english',[LanguageController::class,'english'])->name('english.language');

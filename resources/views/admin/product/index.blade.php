@@ -9,7 +9,7 @@
           <a class="breadcrumb-item" href="index.html">SHopMama</a>
           <span class="breadcrumb-item active">Products</span>
         </nav>
-  
+
         <div class="sl-pagebody">
           <div class="row row-sm">
             <div class="col-md-12">
@@ -77,7 +77,7 @@
               </div>
               </div><!-- card -->
             </div>
-         
+
           </div>
         </div>
     </div>

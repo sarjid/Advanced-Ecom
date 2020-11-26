@@ -15,7 +15,7 @@ class BrandController extends Controller
        return view('admin.brand.index',compact('brands'));
    }
 
-   // store brand 
+   // store brand
    public function brandStore(Request $request){
        $request->validate([
             'brand_name_en' => 'required',
@@ -45,16 +45,16 @@ class BrandController extends Controller
                 'alert-type'=>'success'
             );
             return Redirect()->back()->with($notification);
-        
+
    }
 
-   //editdata 
+   //editdata
    public function edit($brand_id){
        $brand = Brand::findOrFail($brand_id);
         return view('admin.brand.edit',compact('brand'));
    }
 
-   //update Brand 
+   //update Brand
    public function brandUpdate(Request $request){
        $brand_id = $request->id;
        $old_img = $request->old_image;
@@ -98,7 +98,7 @@ class BrandController extends Controller
 
    }
 
-   //delete brand 
+   //delete brand
    public function delete($brand_id){
        $brand = Brand::findOrFail($brand_id);
        $img = $brand->brand_image;

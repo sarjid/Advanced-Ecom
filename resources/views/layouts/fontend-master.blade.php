@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	
+
 <head>
 		<!-- Meta -->
 		<meta charset="utf-8">
@@ -15,7 +15,7 @@
 
 	    <!-- Bootstrap Core CSS -->
 	    <link rel="stylesheet" href="{{ asset('fontend') }}/assets/css/bootstrap.min.css">
-	    
+
 	    <!-- Customizable CSS -->
 	    <link rel="stylesheet" href="{{ asset('fontend') }}/assets/css/main.css">
 	    <link rel="stylesheet" href="{{ asset('fontend') }}/assets/css/blue.css">
@@ -27,7 +27,7 @@
 		<!-- Icons/Glyphs -->
 		<link rel="stylesheet" href="{{ asset('fontend') }}/assets/css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="{{asset('backend')}}/lib/toastr/toastr.css">
-        <!-- Fonts --> 
+        <!-- Fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -44,14 +44,20 @@
 		<div class="header-top-inner">
 			<div class="cnt-account">
 				<ul class="list-unstyled">
-					<li><a href="#"><i class="icon fa fa-user"></i>My Account</a></li>
+                    <li><a href="#"><i class="icon fa fa-user"></i>
+                        @if (session()->get('language') == 'bangla')
+                        আমার প্রোফাইল
+                        @else
+                         My Account
+                         @endif
+                        </a></li>
 					<li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
 					<li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
 					<li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
 					<li>
                         @auth
                         <a href="{{ route('user.dashboard') }}"><i class="icon fa fa-lock"></i>My Profile</a>
-                      
+
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
@@ -74,11 +80,14 @@
 					</li>
 
 					<li class="dropdown dropdown-small">
-						<a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="value">English </span><b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="value">
+                             @if (session()->get('language') == 'bangla') ভাষা পরিবর্তন করুন @else Language @endif</span><b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">English</a></li>
-							<li><a href="#">French</a></li>
-							<li><a href="#">German</a></li>
+                            @if (session()->get('language') == 'bangla')
+                            <li><a href="{{ route('english.language') }}">English</a></li>
+                            @else
+                            <li><a href="{{ route('bangla.language') }}">বাংলা</a></li>
+                            @endif
 						</ul>
 					</li>
 				</ul><!-- /.list-unstyled -->
@@ -95,7 +104,7 @@
 					<!-- ============================================================= LOGO ============================================================= -->
 <div class="logo">
 	<a href="{{ url('/') }}">
-		
+
 		<img src="{{ asset('fontend') }}/assets/images/logo.png" alt="">
 
 	</a>
@@ -127,7 +136,7 @@
 
             <input class="search-field" placeholder="Search here..." />
 
-            <a class="search-button" href="#" ></a>    
+            <a class="search-button" href="#" ></a>
 
         </div>
     </form>
@@ -150,8 +159,8 @@
 						<span class="sign">$</span><span class="value">600.00</span>
 					</span>
 				</div>
-				
-			
+
+
 		    </div>
 		</a>
 		<ul class="dropdown-menu">
@@ -164,7 +173,7 @@
 							</div>
 						</div>
 						<div class="col-xs-7">
-							
+
 							<h3 class="name"><a href="index8a95.html?page-detail">Simple Product</a></h3>
 							<div class="price">$600.00</div>
 						</div>
@@ -175,19 +184,19 @@
 				</div><!-- /.cart-item -->
 				<div class="clearfix"></div>
 			<hr>
-		
+
 			<div class="clearfix cart-total">
 				<div class="pull-right">
-					
+
 						<span class="text">Sub Total :</span><span class='price'>$600.00</span>
-						
+
 				</div>
 				<div class="clearfix"></div>
-					
-				<a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>	
+
+				<a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>
 			</div><!-- /.cart-total-->
-					
-				
+
+
 		</li>
 		</ul><!-- /.dropdown-menu-->
 	</div><!-- /.dropdown-cart -->
@@ -217,15 +226,14 @@
 		<ul class="nav navbar-nav">
 			<li class="active dropdown yamm-fw">
 				<a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a>
-				
+
 			</li>
 			<li class="dropdown yamm mega-menu">
 				<a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Clothing</a>
                 <ul class="dropdown-menu container">
 					<li>
-               						<div class="yamm-content ">
-            <div class="row">
-                
+               		<div class="yamm-content ">
+                         <div class="row">
                    <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
                         <h2 class="title">Men</h2>
                         <ul class="links">
@@ -236,7 +244,7 @@
                             <li><a href="#">Sport Wear</a></li>
                              <li><a href="#">Blazers</a></li>
                               <li><a href="#">Shirts</a></li>
-                          
+
                         </ul>
                     </div><!-- /.col -->
 
@@ -245,12 +253,12 @@
                         <ul class="links">
                             <li><a href="#">Handbags</a></li>
                             <li><a href="#">Jwellery</a></li>
-                            <li><a href="#">Swimwear </a></li>                   
+                            <li><a href="#">Swimwear </a></li>
                             <li><a href="#">Tops</a></li>
                             <li><a href="#">Flats</a></li>
                              <li><a href="#">Shoes</a></li>
                               <li><a href="#">Winter Wear</a></li>
-                       
+
                         </ul>
                     </div><!-- /.col -->
 
@@ -262,43 +270,43 @@
                             <li><a href="#">Shirts</a></li>
                             <li><a href="#">Shoes</a></li>
                              <li><a href="#">School Bags</a></li>
-                              <li><a href="#">Lunch Box</a></li> 
+                              <li><a href="#">Lunch Box</a></li>
                                <li><a href="#">Footwear</a></li>
-                                                                   
+
                         </ul>
                     </div><!-- /.col -->
 
                     <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
                         <h2 class="title">Girls</h2>
                         <ul class="links">
-                            <li><a href="#">Sandals </a></li> 
+                            <li><a href="#">Sandals </a></li>
                             <li><a href="#">Shorts</a></li>
                             <li><a href="#">Dresses</a></li>
                             <li><a href="#">Jwellery</a></li>
                             <li><a href="#">Bags</a></li>
                              <li><a href="#">Night Dress</a></li>
                               <li><a href="#">Swim Wear</a></li>
-                          
-                                   
+
+
                         </ul>
                     </div><!-- /.col -->
 
-                    
+
        <div class="col-xs-12 col-sm-6 col-md-4 col-menu banner-image">
                                     <img class="img-responsive" src="assets/images/banners/top-menu-banner.jpg" alt="">
-                              
-                            
-      
-   
-       
- 
-</div><!-- /.yamm-content -->					
+
+
+
+
+
+
+</div><!-- /.yamm-content -->
 </div>
 </div>
 
 </li>
 				</ul>
-				
+
 			</li>
 
 			<li class="dropdown mega-menu">
@@ -354,7 +362,7 @@
                      <li><a href="#">Lenses</a></li>
                      <li><a href="#">Surveillance</a></li>
                       <li><a href="#">Tripods</a></li>
-                     
+
                 </ul>
             </div><!-- /.col -->
             <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
@@ -372,7 +380,7 @@
                      <li><a href="#">Memory Cards</a></li>
                 </ul>
             </div>
-            
+
              <div class="col-xs-12 col-sm-12 col-md-4 col-menu custom-banner">
              <a href="#"><img alt="" src="assets/images/banners/banner-side.png"></a>
              </div>
@@ -381,7 +389,7 @@
 				</ul>
 			</li>
 			<li class="dropdown hidden-sm">
-				
+
 				<a href="category.html">Health & Beauty
 				    <span class="menu-label new-menu hidden-xs">new</span>
 				</a>
@@ -394,21 +402,21 @@
 			<li class="dropdown">
 				<a href="contact.html">Jewellery</a>
 			</li>
-            
+
             <li class="dropdown">
 				<a href="contact.html">Shoes</a>
 			</li>
             <li class="dropdown">
 				<a href="contact.html">Kids & Girls</a>
 			</li>
-			
+
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Pages</a>
 				<ul class="dropdown-menu pages">
 					<li>
 						<div class="yamm-content">
 							<div class="row">
-								
+
 									<div class="col-xs-12 col-menu">
 	                                  <ul class="links">
 		                                  	<li><a href="home.html">Home</a></li>
@@ -426,27 +434,27 @@
 											<li><a href="product-comparison.html">Product-Comparison</a></li>
 		                                  	<li><a href="faq.html">FAQ</a></li>
 											<li><a href="404.html">404</a></li>
-											
+
 	                                  </ul>
 									</div>
-									
-									
-								
+
+
+
 							</div>
 						</div>
 					</li>
-                    
-                   
-					
+
+
+
 				</ul>
 			</li>
              <li class="dropdown  navbar-right special-menu">
 				<a href="#">Todays offer</a>
 			</li>
-					
-			
+
+
 		</ul><!-- /.navbar-nav -->
-		<div class="clearfix"></div>				
+		<div class="clearfix"></div>
 	</div><!-- /.nav-outer -->
 </div><!-- /.navbar-collapse -->
 
@@ -520,7 +528,7 @@
                     <span><a href="#">flipmart@themesground.com</a></span>
                 </div>
             </li>
-              
+
             </ul>
     </div><!-- /.module-body -->
                 </div><!-- /.col -->
@@ -619,7 +627,7 @@
     <script src="{{ asset('fontend') }}/assets/js/wow.min.js"></script>
 	<script src="{{ asset('fontend') }}/assets/js/scripts.js"></script>
     <script type="text/javascript" src="{{ asset('backend') }}/lib/toastr/toastr.min.js"></script>
-   
+
     <script>
       @if(Session::has('message'))
         var type ="{{Session::get('alert-type','info')}}"
@@ -631,7 +639,7 @@
             case 'success':
                 toastr.success(" {{Session::get('message')}} ");
                 break;
-                
+
             case 'warning':
                 toastr.warning(" {{Session::get('message')}} ");
                 break;

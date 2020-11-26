@@ -8,5 +8,7 @@
 
       <a href="{{ route('logout') }}" class="btn btn-danger btn-sm btn-block" onclick="event.preventDefault();
     document.getElementById('logout-form').submit();"> Log Out</a>
+
+    
     </ul>
   </div>
