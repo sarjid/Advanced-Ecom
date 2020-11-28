@@ -16,7 +16,7 @@ class ProductController extends Controller
 {
    public function addProduct(){
        $categories = Category::latest()->get();
-       $brands = Brand::latest()->get();
+       $brands = Brand::all();
        return view('admin.product.create',compact('categories','brands'));
    }
 
@@ -28,9 +28,9 @@ class ProductController extends Controller
         return json_encode($subsubCat);
     }
 
- /// store product 
+ /// store product
    public function store(Request $request){
-   
+
     $image = $request->file('product_thambnail');
             $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
             Image::make($image)->resize(917,1000)->save('uploads/products/thambnail/'.$name_gen);
@@ -67,7 +67,7 @@ class ProductController extends Controller
                 'status' => 1,
                 'created_at' => Carbon::now(),
 
-       
+
     ]);
 
     //////////////////// Multiple image uplod start /////////////////////////////////
@@ -77,7 +77,7 @@ class ProductController extends Controller
         $make_name=hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
         Image::make($img)->resize(917,1000)->save('uploads/products/multi-image/'.$make_name);
         $uplodPath = 'uploads/products/multi-image/'.$make_name;
-        
+
         MultiImg::insert([
             'product_id' => $product_id,
             'photo_name' => $uplodPath,
@@ -94,13 +94,13 @@ class ProductController extends Controller
     return Redirect()->back()->with($notification);
 }
 
-// manage product 
+// manage product
     public function manageProduct(){
         $products = Product::latest()->get();
         return view('admin.product.index',compact('products'));
     }
 
-    // edit product 
+    // edit product
     public function edit($product_id){
         $product = Product::findOrFail($product_id);
         $categories = Category::latest()->get();
@@ -109,7 +109,7 @@ class ProductController extends Controller
         return view('admin.product.edit',compact('product','categories','brands','multiImgs'));
     }
 
-    // product update without image 
+    // product update without image
     public function productDataUpdate(Request $request){
         $product_id = $request->product_id;
 
@@ -176,13 +176,13 @@ class ProductController extends Controller
 
             ]);
 
-            
+
         $notification=array(
             'message'=>'Product Thambnail Update Success',
             'alert-type'=>'success'
         );
         return Redirect()->back()->with($notification);
-            
+
     }
 
 
@@ -219,7 +219,7 @@ class ProductController extends Controller
             $oldimg = MultiImg::findOrFail($id);
             unlink($oldimg->photo_name);
         MultiImg::findOrFail($id)->delete();
-        
+
         $notification=array(
             'message'=>'Product Image Dlete Success',
             'alert-type'=>'success'
@@ -245,8 +245,26 @@ class ProductController extends Controller
             'alert-type'=>'success'
         );
         return Redirect()->back()->with($notification);
-        
+
     }
-   
+
+    // delete product
+    public function delete($product_id){
+        $product = Product::findOrFail($product_id);
+        unlink($product->product_thambnail);
+         Product::findOrFail($product_id)->delete();
+         $images = MultiImg::where('product_id',$product_id)->get();
+         foreach ($images as $img) {
+            unlink($img->photo_name);
+            MultiImg::where('product_id',$product_id)->delete();
+         }
+
+         $notification=array(
+            'message'=>'Product Deleted',
+            'alert-type'=>'success'
+        );
+        return Redirect()->back()->with($notification);
+
+    }
 
 }

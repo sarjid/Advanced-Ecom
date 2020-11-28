@@ -10,24 +10,9 @@ use App\Http\Controllers\Admin\SliderController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', [IndexController::class,'index']);
 
 Auth::routes();
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 // ====================================== Admin Routes =====================================
 Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Admin'], function(){
@@ -71,7 +56,7 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
      Route::get('manage-product',[ProductController::class,'manageProduct'])->name('manage-product');
      Route::get('/product-edit/{product_id}',[ProductController::class,'edit']);
      Route::post('product/data-update',[ProductController::class,'productDataUpdate'])->name('update-product-data');
-    //  Route::get('/product-delete/{product_id}',[ProductController::class,'delete']);
+     Route::get('/product-delete/{product_id}',[ProductController::class,'delete']);
     Route::post('product/thambnail/update',[ProductController::class,'thambnailUpdate'])->name('update-product-thambnail');
     Route::post('product/multi-image/update',[ProductController::class,'multiImagUpdate'])->name('update-product-image');
     Route::get('product/multiimg/delete/{id}',[ProductController::class,'multiImageDelete']);
