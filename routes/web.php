@@ -85,3 +85,4 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
 // ====================================== Fontend Routes =====================================
 Route::get('language/bangla',[LanguageController::class,'bangla'])->name('bangla.language');
 Route::get('language/english',[LanguageController::class,'english'])->name('english.language');
+Route::get('single/product/{id}/{slug}',[IndexController::class,'singleProduct']);
