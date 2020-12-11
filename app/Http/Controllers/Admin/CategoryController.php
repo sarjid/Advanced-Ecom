@@ -17,7 +17,7 @@ class CategoryController extends Controller
         return view('admin.category.index',compact('categories'));
     }
 
-    //store category 
+    //store category
     public function categoryStore(Request $request){
 
         $request->validate([
@@ -40,16 +40,16 @@ class CategoryController extends Controller
         'alert-type'=>'success'
     );
     return Redirect()->back()->with($notification);
-        
+
     }
 
-    //edit category 
+    //edit category
     public function edit($cat_id){
         $category = Category::findOrFail($cat_id);
         return view('admin.category.edit',compact('category'));
     }
 
-    //update 
+    //update
 
     public function catUpdate(Request $request){
         $cat_id = $request->id;
@@ -62,7 +62,7 @@ class CategoryController extends Controller
             'category_icon' => $request->category_icon,
             'created_at' => Carbon::now(),
            ]);
-    
+
            $notification=array(
             'message'=>'Catetory Update Success',
             'alert-type'=>'success'
@@ -72,7 +72,7 @@ class CategoryController extends Controller
 
 
 
-    //delete Category 
+    //delete Category
    public function delete($cat_id){
     Category::findOrFail($cat_id)->delete();
         $notification=array(
@@ -91,7 +91,7 @@ class CategoryController extends Controller
     }
 
 
-    // store data in database 
+    // store data in database
     public function subCategoryStore(Request $request){
         $request->validate([
             'subcategory_name_en' => 'required',
@@ -105,11 +105,11 @@ class CategoryController extends Controller
             'category_id' => $request->category_id,
             'subcategory_name_en' => $request->subcategory_name_en,
             'subcategory_name_bn' => $request->subcategory_name_bn,
-            'subcategory_slug_en' => strtolower(str_replace(' ','-',$request->subcategory_slug_en)),
-            'subcategory_slug_bn' => str_replace(' ','-',$request->subcategory_slug_bn),
+            'subcategory_slug_en' => strtolower(str_replace(' ','-',$request->subcategory_name_en)),
+            'subcategory_slug_bn' => str_replace(' ','-',$request->subcategory_name_bn),
             'created_at' => Carbon::now(),
            ]);
-    
+
            $notification=array(
             'message'=>'Sub Catetory Added Success',
             'alert-type'=>'success'
@@ -117,7 +117,7 @@ class CategoryController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    //edit subcategory 
+    //edit subcategory
     public function subEdit($subcat_id){
         $subcategory = Subcategory::findOrFail($subcat_id);
         $categories = Category::orderBy('category_name_en','ASC')->get();
@@ -132,11 +132,11 @@ class CategoryController extends Controller
             'category_id' => $request->category_id,
             'subcategory_name_en' => $request->subcategory_name_en,
             'subcategory_name_bn' => $request->subcategory_name_bn,
-            'subcategory_slug_en' => strtolower(str_replace(' ','-',$request->subcategory_slug_en)),
-            'subcategory_slug_bn' => str_replace(' ','-',$request->subcategory_slug_bn),
+            'subcategory_slug_en' => strtolower(str_replace(' ','-',$request->subcategory_name_en)),
+            'subcategory_slug_bn' => str_replace(' ','-',$request->subcategory_name_bn),
             'updated_at' => Carbon::now(),
            ]);
-    
+
            $notification=array(
             'message'=>'Sub-Catetory Update Success',
             'alert-type'=>'success'
@@ -168,7 +168,7 @@ class CategoryController extends Controller
     }
 
 
-    ///store 
+    ///store
 
     public function subSubCategoryStore(Request $request){
         SubsubCategory::insert([
@@ -176,11 +176,11 @@ class CategoryController extends Controller
             'subcategory_id' => $request->subcategory_id,
             'subsubcategory_name_en' => $request->subsubcategory_name_en,
             'subsubcategory_name_bn' => $request->subsubcategory_name_bn,
-            'subsubcategory_slug_en' => strtolower(str_replace(' ','-',$request->subsubcategory_slug_en)),
-            'subsubcategory_slug_bn' => str_replace(' ','-',$request->subsubcategory_slug_bn),
+            'subsubcategory_slug_en' => strtolower(str_replace(' ','-',$request->subsubcategory_name_en)),
+            'subsubcategory_slug_bn' => str_replace(' ','-',$request->subsubcategory_name_bn),
             'created_at' => Carbon::now(),
            ]);
-    
+
            $notification=array(
             'message'=>'Sub-SubCatetory Added Success',
             'alert-type'=>'success'
@@ -189,23 +189,23 @@ class CategoryController extends Controller
     }
 
 
-    //edit 
+    //edit
     public function subSubEdit($subsubcat_id){
         $subsubcat = SubsubCategory::findOrFail($subsubcat_id);
         return view('admin.sub-sub-category.edit',compact('subsubcat'));
     }
 
-    //update 
+    //update
     public function subSubCatUpdate(Request $request){
         $subsubcat_id = $request->id;
         SubsubCategory::findOrFail($subsubcat_id)->Update([
             'subsubcategory_name_en' => $request->subsubcategory_name_en,
             'subsubcategory_name_bn' => $request->subsubcategory_name_bn,
-            'subsubcategory_slug_en' => strtolower(str_replace(' ','-',$request->subsubcategory_slug_en)),
-            'subsubcategory_slug_bn' => str_replace(' ','-',$request->subsubcategory_slug_bn),
+            'subsubcategory_slug_en' => strtolower(str_replace(' ','-',$request->subsubcategory_name_en)),
+            'subsubcategory_slug_bn' => str_replace(' ','-',$request->subsubcategory_name_bn),
             'updated_at' => Carbon::now(),
            ]);
-    
+
            $notification=array(
             'message'=>'Sub-SubCatetory Update Success',
             'alert-type'=>'success'

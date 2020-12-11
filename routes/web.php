@@ -86,3 +86,9 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
 Route::get('language/bangla',[LanguageController::class,'bangla'])->name('bangla.language');
 Route::get('language/english',[LanguageController::class,'english'])->name('english.language');
 Route::get('single/product/{id}/{slug}',[IndexController::class,'singleProduct']);
+//product tags
+Route::get('product/tag/{tag}',[IndexController::class,'tagWiseProduct']);
+//subcategory wise product show
+Route::get('subcategory/product/{subcat_id}/{slug}',[IndexController::class,'subCatWiseProduct']);
+Route::get('sub/subcategory/product/{subsubcat_id}/{slug}',[IndexController::class,'subSubCatWiseProduct']);
+
