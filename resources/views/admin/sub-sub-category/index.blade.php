@@ -9,7 +9,7 @@
           <a class="breadcrumb-item" href="index.html">SHopMama</a>
           <span class="breadcrumb-item active">Sub-Sub-Category</span>
         </nav>
-  
+
         <div class="sl-pagebody">
           <div class="row row-sm">
             <div class="col-md-8">
@@ -74,7 +74,7 @@
                         <label class="form-control-label">Select SubCategory: <span class="tx-danger">*</span></label>
                         <select class="form-control select2-show-search" data-placeholder="Select One" name="subcategory_id">
                           <option label="Choose one"></option>
-                            
+
                         </select>
                         @error('subcategory_id')
                             <span class="text-danger">{{ $message }}</span>
@@ -96,7 +96,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                      
+
 
                     <div class="form-layout-footer">
                       <button type="submit" class="btn btn-info">Add New</button>
@@ -110,7 +110,7 @@
     </div>
 
     <script src="{{asset('backend')}}/lib/jquery-2.2.4.min.js"></script>
-      
+
     <script type="text/javascript">
       $(document).ready(function() {
         $('select[name="category_id"]').on('change', function(){
@@ -123,23 +123,23 @@
                     success:function(data) {
                        var d =$('select[name="subcategory_id"]').empty();
                           $.each(data, function(key, value){
-    
+
                               $('select[name="subcategory_id"]').append('<option value="'+ value.id +'">' + value.subcategory_name_en + '</option>');
-    
+
                           });
-    
+
                     },
-    
+
                 });
             } else {
                 alert('danger');
             }
-    
+
         });
-        
+
     });
-    
-    </script>  
+
+    </script>
 
     @endsection
 

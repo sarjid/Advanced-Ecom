@@ -4,7 +4,7 @@
     active show-sub
 @endsection
 @section('manage-product')
-    active 
+    active
 @endsection
 
      <!-- ########## START: MAIN PANEL ########## -->
@@ -13,7 +13,7 @@
           <a class="breadcrumb-item" href="index.html">SHopMama</a>
           <span class="breadcrumb-item active">Update Product</span>
         </nav>
-  
+
         <div class="sl-pagebody">
             <div class="card pd-20 pd-sm-40">
               <h6 class="card-body-title">Update product</h6>
@@ -34,9 +34,9 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
-      
-                    </div>  
-  
+
+                    </div>
+
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="form-control-label">Select Category: <span class="tx-danger">*</span></label>
@@ -50,7 +50,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
-                    </div>  
+                    </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
@@ -65,7 +65,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
-                    </div>  
+                    </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
@@ -80,8 +80,8 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
-                    </div>  
-                  
+                    </div>
+
                   <div class="col-md-4">
                     <div class="form-group">
                         <label class="form-control-label">Product Name English: <span class="tx-danger">*</span></label>
@@ -90,7 +90,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -100,7 +100,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -110,7 +110,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -120,7 +120,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -130,7 +130,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -140,17 +140,17 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                         <label class="form-control-label">Product Size English: <span class="tx-danger">*</span></label>
-                        <input class="form-control" type="text" name="product_size_en"  placeholder="Product Size English" data-role="tagsinput" value="{{ $product->product_size_en }}"> 
+                        <input class="form-control" type="text" name="product_size_en"  placeholder="Product Size English" data-role="tagsinput" value="{{ $product->product_size_en }}">
                         @error('product_size_en')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -160,7 +160,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -170,7 +170,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -180,7 +180,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -190,7 +190,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -200,7 +200,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
 
                   <div class="col-md-8">
@@ -211,7 +211,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
@@ -221,7 +221,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
@@ -231,7 +231,7 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
@@ -241,10 +241,10 @@
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                       </div>
-                  </div> 
+                  </div>
 
                   <div class="col-md-4">
-                  <label class="ckbox"> 
+                  <label class="ckbox">
                     <input type="checkbox" name="hot_deals" value="1" {{ $product->hot_deals == 1 ?'checked': '' }}><span>Hot Deals</span>
                   </label>
                   </div>
@@ -272,7 +272,6 @@
               </div><!-- form-layout-footer -->
             </form>
 
-
           <form action="{{ route('update-product-thambnail') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -280,7 +279,6 @@
             <br>
             <h4>Update Product Thambnail</h4>
             <div class="row row-sm" style="margin-top:30px;">
-             
                   <div class="col-md-3">
                     <div class="card">
                       <img class="card-img-top" src="{{ asset($product->product_thambnail) }}" alt="Card image cap" style="height: 150px; width:150px;">
@@ -307,7 +305,7 @@
             <br>
             <h4>Update Product Multiple Image</h4>
             <div class="row row-sm" style="margin-top:50px;">
-            
+
               @foreach ($multiImgs as $img)
                   <div class="col-md-3">
                     <div class="card" >
@@ -325,7 +323,7 @@
                       </div>
                     </div>
                   </div>
-                    @endforeach  
+                    @endforeach
             </div>
 
             <div class="form-layout-footer">
@@ -333,7 +331,7 @@
             </div><!-- form-layout-footer -->
           </form>
 
-            </div><!-- row --> 
+            </div><!-- row -->
 
             {{-- <div class="col-md-4">
                 <div class="form-group">
@@ -344,7 +342,7 @@
                   @enderror
                   <img src="" id="mainThmb">
                   </div>
-            </div> 
+            </div>
 
               <div class="col-md-4">
                 <div class="form-group">
@@ -360,7 +358,7 @@
     </div>
 
     <script src="{{asset('backend')}}/lib/jquery-2.2.4.min.js"></script>
-      
+
     <script type="text/javascript">
       $(document).ready(function() {
         $('select[name="category_id"]').on('change', function(){
@@ -372,25 +370,25 @@
                     dataType:"json",
                     success:function(data) {
                       $('select[name="subsubcategory_id"]').html('');
-                      
+
                        var d =$('select[name="subcategory_id"]').empty();
                           $.each(data, function(key, value){
-    
+
                               $('select[name="subcategory_id"]').append('<option value="'+ value.id +'">' + value.subcategory_name_en + '</option>');
-    
+
                           });
-    
+
                     },
-    
+
                 });
             } else {
                 alert('danger');
             }
-    
+
         });
 
-        
-    
+
+
         $('select[name="subcategory_id"]').on('change', function(){
             var subcategory_id = $(this).val();
             if(subcategory_id) {
@@ -401,53 +399,53 @@
                     success:function(data) {
                        var d =$('select[name="subsubcategory_id"]').empty();
                           $.each(data, function(key, value){
-    
+
                               $('select[name="subsubcategory_id"]').append('<option value="'+ value.id +'">' + value.subsubcategory_name_en + '</option>');
-    
+
                           });
-    
+
                     },
-    
+
                 });
             } else {
                 alert('danger');
             }
-    
+
         });
-        
+
     });
-    
-    </script>  
+
+    </script>
 
 
 <script>
- 
+
   $(document).ready(function(){
    $('#multiImg').on('change', function(){ //on file input change
       if (window.File && window.FileReader && window.FileList && window.Blob) //check File API supported browser
       {
           var data = $(this)[0].files; //this file data
-           
+
           $.each(data, function(index, file){ //loop though each file
               if(/(\.|\/)(gif|jpe?g|png)$/i.test(file.type)){ //check supported file type
                   var fRead = new FileReader(); //new filereader
                   fRead.onload = (function(file){ //trigger function on successful read
                   return function(e) {
                       var img = $('<img/>').addClass('thumb').attr('src', e.target.result) .width(80)
-                  .height(80); //create image element 
+                  .height(80); //create image element
                       $('#preview_img').append(img); //append image to output element
                   };
                   })(file);
                   fRead.readAsDataURL(file); //URL representing the file's data.
               }
           });
-           
+
       }else{
           alert("Your browser doesn't support File API!"); //if File API is absent
       }
    });
   });
-   
+
   </script>
 
   <script>
@@ -455,15 +453,16 @@
       if (input.files && input.files[0]) {
         var reader = new FileReader();
 
-        reader.onload = function(e){ 
+        reader.onload = function(e){
             $('#mainThmb').attr('src',e.target.result).width(80)
                   .height(80);
         };
         reader.readAsDataURL(input.files[0]);
-        
-        
+
+
       }
     }
   </script>
 
     @endsection
+

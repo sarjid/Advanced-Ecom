@@ -7,6 +7,7 @@ Use App\Http\Controllers\Admin\BrandController;
 Use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Fontend\CartController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -91,4 +92,7 @@ Route::get('product/tag/{tag}',[IndexController::class,'tagWiseProduct']);
 //subcategory wise product show
 Route::get('subcategory/product/{subcat_id}/{slug}',[IndexController::class,'subCatWiseProduct']);
 Route::get('sub/subcategory/product/{subsubcat_id}/{slug}',[IndexController::class,'subSubCatWiseProduct']);
-
+//product view modal with ajax
+Route::get('product/view/modal/{id}',[IndexController::class,'productViewAjax']);
+// add to cart
+Route::post('cart/data/store/{id}',[CartController::class,'addToCart']);
