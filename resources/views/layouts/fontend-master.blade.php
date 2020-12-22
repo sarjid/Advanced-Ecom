@@ -142,10 +142,11 @@
         </div>
     </form>
 </div><!-- /.search-area -->
-<!-- ============================================================= SEARCH AREA : END ============================================================= -->				</div><!-- /.top-search-holder -->
+<!-- ============================= SEARCH AREA : END ============== -->
+</div><!-- /.top-search-holder -->
 
-				<div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
-					<!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
+<div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
+<!-- ===================== SHOPPING CART DROPDOWN ================== -->
 
 	<div class="dropdown dropdown-cart">
 		<a href="#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
@@ -153,11 +154,11 @@
             <div class="basket">
 					<i class="glyphicon glyphicon-shopping-cart"></i>
 				</div>
-				<div class="basket-item-count"><span class="count">2</span></div>
+				<div class="basket-item-count"><span class="count" id="cartQty"></span></div>
 				<div class="total-price-basket">
 					<span class="lbl">cart -</span>
 					<span class="total-price">
-						<span class="sign">$</span><span class="value">600.00</span>
+						<span class="sign">$</span><span class="value" id="cartSubTotal"></span>
 					</span>
 				</div>
 
@@ -166,30 +167,17 @@
 		</a>
 		<ul class="dropdown-menu">
 			<li>
-				<div class="cart-item product-summary">
-					<div class="row">
-						<div class="col-xs-4">
-							<div class="image">
-								<a href="detail.html"><img src="assets/images/cart.jpg" alt=""></a>
-							</div>
-						</div>
-						<div class="col-xs-7">
+                {{-- mini cart start with ajax  --}}
+                <div id="miniCart">
 
-							<h3 class="name"><a href="index8a95.html?page-detail">Simple Product</a></h3>
-							<div class="price">$600.00</div>
-						</div>
-						<div class="col-xs-1 action">
-							<a href="#"><i class="fa fa-trash"></i></a>
-						</div>
-					</div>
-				</div><!-- /.cart-item -->
-				<div class="clearfix"></div>
-			<hr>
+                </div>
+                {{-- mini cart end  --}}
+
 
 			<div class="clearfix cart-total">
 				<div class="pull-right">
 
-						<span class="text">Sub Total :</span><span class='price'>$600.00</span>
+						<span class="text">Sub Total :</span><span class='price' id="cartSubTotal"></span>
 
 				</div>
 				<div class="clearfix"></div>
@@ -197,16 +185,14 @@
 				<a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>
 			</div><!-- /.cart-total-->
 
-
 		</li>
 		</ul><!-- /.dropdown-menu-->
 	</div><!-- /.dropdown-cart -->
 
-<!-- ============================================================= SHOPPING CART DROPDOWN : END============================================================= -->				</div><!-- /.top-cart-row -->
+<!-- ======== SHOPPING CART DROPDOWN : END================ -->
+                </div><!-- /.top-cart-row -->
 			</div><!-- /.row -->
-
 		</div><!-- /.container -->
-
 	</div><!-- /.main-header -->
 
 	<!-- ============================================== NAVBAR ============================================== -->
@@ -518,6 +504,7 @@
     <script src="{{ asset('fontend') }}/assets/js/bootstrap-select.min.js"></script>
     <script src="{{ asset('fontend') }}/assets/js/wow.min.js"></script>
 	<script src="{{ asset('fontend') }}/assets/js/scripts.js"></script>
+	<script src="{{ asset('fontend') }}/assets/js/sweetalert2@8.js"></script>
     <script type="text/javascript" src="{{ asset('backend') }}/lib/toastr/toastr.min.js"></script>
 
     <script>
@@ -554,7 +541,7 @@
     function productView(id){
         $.ajax({
             type:'GET',
-            url: 'product/view/modal/'+id,
+            url: '/product/view/modal/'+id,
             dataType:'json',
             success:function(data){
                $('#pname').text(data.product.product_name_en);
@@ -622,14 +609,107 @@
              data:{
                  color:color, size:size, quantity:quantity, product_name:product_name
              },
-             url: "cart/data/store/"+id,
+             url: "/cart/data/store/"+id,
              success:function(data){
+                miniCart();
                  $('#closeModal').click();
-                 console.log(data)
+                 //  start message
+                 const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
+
+                     if($.isEmptyObject(data.error)){
+                          Toast.fire({
+                            type: 'success',
+                            title: data.success
+                          })
+                     }else{
+                           Toast.fire({
+                              type: 'error',
+                              title: data.error
+                          })
+					 }
+                    //  end message
              }
          })
     }
 //End add to cart product
+</script>
+
+<script>
+    function miniCart(){
+        $.ajax({
+            type:'GET',
+            url: '/product/mini/cart',
+            dataType:'json',
+            success:function(response){
+                $('span[id="cartSubTotal"]').text(response.cartTotal);
+                $('#cartQty').text(response.cartQty);
+                var miniCart = ""
+               $.each(response.carts, function(key,value){
+                   miniCart += `<div class="cart-item product-summary">
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="image">
+								<a href="detail.html"><img src="/${value.options.image}" alt=""></a>
+							</div>
+						</div>
+						<div class="col-xs-7">
+							<h3 class="name"><a href="index8a95.html?page-detail">${value.name}</a></h3>
+							<div class="price">${value.price}$</div>
+						</div>
+						<div class="col-xs-1 action">
+							<button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)"><i class="fa fa-trash"></i></button>
+						</div>
+					</div>
+				</div><!-- /.cart-item -->
+				<div class="clearfix"></div> <hr>`
+
+               });
+
+               $('#miniCart').html(miniCart);
+
+            }
+        })
+    }
+    miniCart();
+
+    /// mini cart remove start
+    function miniCartRemove(rowId){
+        $.ajax({
+            type:'GET',
+            url: '/minicart/product-remove/'+rowId,
+            dataType:'json',
+            success:function(data){
+                miniCart();
+                //  start message
+                const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
+
+                     if($.isEmptyObject(data.error)){
+                          Toast.fire({
+                            type: 'success',
+                            title: data.success
+                          })
+                     }else{
+                           Toast.fire({
+                              type: 'error',
+                              title: data.error
+                          })
+					 }
+                    //  end message
+            }
+        });
+    }
+    // mini cart remove end
+
 </script>
 
 </body>

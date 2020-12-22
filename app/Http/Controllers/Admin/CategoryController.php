@@ -146,6 +146,7 @@ class CategoryController extends Controller
 
     //delet subcategory
     public function subDelete($subcat_id){
+
         Subcategory::findOrFail($subcat_id)->delete();
         $notification=array(
         'message'=>'Sub-Category Delete Success',

@@ -95,4 +95,8 @@ Route::get('sub/subcategory/product/{subsubcat_id}/{slug}',[IndexController::cla
 //product view modal with ajax
 Route::get('product/view/modal/{id}',[IndexController::class,'productViewAjax']);
 // add to cart
-Route::post('cart/data/store/{id}',[CartController::class,'addToCart']);
+Route::post('/cart/data/store/{id}',[CartController::class,'addToCart']);
+//mini cart
+Route::get('product/mini/cart',[CartController::class,'miniCart']);
+
+Route::get('/minicart/product-remove/{rowId}',[CartController::class,'miniCartRemove']);
