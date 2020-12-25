@@ -8,6 +8,8 @@ Use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Fontend\CartController;
+use App\Http\Controllers\User\CartPageController;
+use App\Http\Controllers\User\WishlistController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -81,6 +83,15 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
     Route::post('update/image',[UserController::class,'updateImage'])->name('update-image');
     Route::get('update/password',[UserController::class,'updatePassPage'])->name('update-password');
     Route::post('store/password',[UserController::class,'storePassword'])->name('password-store');
+    //wishlist
+    Route::get('wishlist',[WishlistController::class,'create'])->name('wishlist');
+    Route::get('/get-wishlist-product',[WishlistController::class,'readAllProduct']);
+    Route::get('/wishlist-remove/{id}',[WishlistController::class,'destory']);
+
+
+
+
+
 });
 
 // ====================================== Fontend Routes =====================================
@@ -100,3 +111,12 @@ Route::post('/cart/data/store/{id}',[CartController::class,'addToCart']);
 Route::get('product/mini/cart',[CartController::class,'miniCart']);
 
 Route::get('/minicart/product-remove/{rowId}',[CartController::class,'miniCartRemove']);
+//wishlist
+Route::post('/add-to-wishlist/{product_id}',[CartController::class,'addToWishlist']);
+ //cart
+ Route::get('my-cart',[CartController::class,'create'])->name('cart');
+ Route::get('/get-cart-product',[CartController::class,'getAllCart']);
+ Route::get('/cart-remove/{rowId}',[CartController::class,'destory']);
+ Route::get('/cart-increment/{rowId}',[CartController::class,'cartIncrement']);
+ Route::get('/cart-decrement/{rowId}',[CartController::class,'cartDecrement']);
+

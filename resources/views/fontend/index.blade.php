@@ -549,11 +549,10 @@
                                                 </button>
                                                 <button class="btn btn-primary cart-btn" type="button" >@if (session()->get('language') == 'bangla') কার্টেসংযুক্ত করুন@else Add to cart @endif></button>
                                             </li>
-                                            <li class="lnk wishlist">
-                                                <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Wishlist">
+                                                <button class="btn btn-primary icon" type="button" title="Add to WIshlist" id="{{ $product->id }}" onclick="addToWishlist(this.id)">
                                                     <i class="icon fa fa-heart"></i>
-                                                </a>
-                                            </li>
+                                                </button>
+
                                             <li class="lnk">
                                                 <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Compare">
                                                     <i class="fa fa-signal" aria-hidden="true"></i>

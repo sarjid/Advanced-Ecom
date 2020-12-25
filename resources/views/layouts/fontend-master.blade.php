@@ -51,8 +51,8 @@
                          My Account
                          @endif
                         </a></li>
-					<li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
-					<li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
+					<li><a href="{{ route('wishlist') }}"><i class="icon fa fa-heart"></i>Wishlist</a></li>
+					<li><a href="{{ route('cart') }}"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
 					<li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
 					<li>
                         @auth
@@ -177,7 +177,7 @@
 			<div class="clearfix cart-total">
 				<div class="pull-right">
 
-						<span class="text">Sub Total :</span><span class='price' id="cartSubTotal"></span>
+						<span class="text">Sub Total :</span>$<span class='price' id="cartSubTotal"></span>
 
 				</div>
 				<div class="clearfix"></div>
@@ -442,7 +442,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel"><span id="pname"></span></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal" >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -490,7 +490,7 @@
 
       </div>
     </div>
-  </div>
+</div>
 	<!-- JavaScripts placed at the end of the document so the pages load faster -->
 	<script src="{{ asset('fontend') }}/assets/js/jquery-1.11.1.min.js"></script>
 	<script src="{{ asset('fontend') }}/assets/js/bootstrap.min.js"></script>
@@ -550,8 +550,8 @@
                $('#pcategory').text(data.product.category.category_name_en);
                $('#pbrand').text(data.product.brand.brand_name_en);
                $('#pimage').attr('src','/'+data.product.product_thambnail);
-              $('#product_id').val(id);
-              $('#qty').val(1);
+               $('#product_id').val(id);
+               $('#qty').val(1);
                 //product price
                if (data.product.discount_price == null) {
                     $('#pprice').text('');
@@ -659,7 +659,7 @@
 						</div>
 						<div class="col-xs-7">
 							<h3 class="name"><a href="index8a95.html?page-detail">${value.name}</a></h3>
-							<div class="price">${value.price}$</div>
+							<div class="price">${value.price}$ * ${value.qty}</div>
 						</div>
 						<div class="col-xs-1 action">
 							<button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)"><i class="fa fa-trash"></i></button>
@@ -711,6 +711,237 @@
     // mini cart remove end
 
 </script>
+
+<script>
+    function addToWishlist(product_id){
+
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            url: "{{ url('/add-to-wishlist/') }}/"+product_id,
+            success:function(data){
+                //  start message
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                    })
+
+                    if($.isEmptyObject(data.error)){
+                        Toast.fire({
+                        type: 'success',
+                        title: data.success
+                        })
+                    }else{
+                        Toast.fire({
+                            type: 'error',
+                            title: data.error
+                        })
+                    }
+                //  end message
+            }
+        })
+    }
+</script>
+
+
+{{-- =============wishlist page ================== --}}
+<script>
+    function wishlist(){
+        $.ajax({
+            type:'GET',
+             url: "{{ url('/user/get-wishlist-product') }}",
+            dataType:'json',
+            success:function(response){
+                var rows = ""
+               $.each(response, function(key,value){
+                   rows += `<tr>
+					<td class="col-md-2"><img src="/${value.product.product_thambnail}" alt="imga"></td>
+					<td class="col-md-7">
+						<div class="product-name"><a href="#">${value.product.product_name_en}</a></div>
+
+						<div class="price">
+                        ${value.product.discount_price == null
+                            ? `$${value.product.selling_price}`
+                            :
+                            `$${value.product.discount_price} <span>$${value.product.selling_price}</span>`
+                        }
+						</div>
+					</td>
+					<td class="col-md-2">
+						<button class="btn-upper btn btn-primary" type="button" title="Add Cart" data-toggle="modal" data-target="#cartModal" id="${value.product_id}" onclick="productView(this.id)">Add to cart</button>
+					</td>
+					<td class="col-md-1 close-btn">
+						<button type="submit" class="" id="${value.id}" onclick="wishlistRemove(this.id)" ><i class="fa fa-times"></i></button>
+					</td>
+				</tr>`
+
+               });
+
+               $('#wishlist').html(rows);
+
+            }
+        })
+    }
+    wishlist();
+
+    function wishlistRemove(id){
+        $.ajax({
+            type:'GET',
+            url: "{{ url('/user/wishlist-remove/') }}/"+id,
+            dataType:'json',
+            success:function(data){
+                wishlist();
+                //  start message
+                const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
+
+                     if($.isEmptyObject(data.error)){
+                          Toast.fire({
+                            type: 'success',
+                            title: data.success
+                          })
+                     }else{
+                           Toast.fire({
+                              type: 'error',
+                              title: data.error
+                          })
+					 }
+                    //  end message
+            }
+        });
+    }
+</script>
+{{-- //end wishlist --}}
+
+{{-- ================= start cart page ====================== --}}
+<script>
+    function cart(){
+        $.ajax({
+            type:'GET',
+             url: "{{ url('/get-cart-product') }}",
+            dataType:'json',
+            success:function(response){
+                var rows = ""
+               $.each(response.carts, function(key,value){
+                   rows += `<tr>
+					<td class="col-md-2"><img src="/${value.options.image}" alt="imga" style="height:60px; width:60px;"></td>
+					<td class="col-md-2">
+						<div class="product-name"><a href="#">${value.name}</a></div>
+
+						<div class="price">
+                        $${value.price}
+						</div>
+					</td>
+
+                    <td class="col-md-2">
+
+                        <strong>${value.options.color}</strong>
+					</td>
+                    <td class="col-md-2">
+                        ${value.options.size == null
+                            ? `<span>......</span>`
+                            :
+                            `<strong>${value.options.size}</strong>`
+                        }
+
+                    </td>
+
+                    <td class="col-md-2">
+                        ${value.qty > 1
+                        ? ` <button type="submit" class="btn btn-success btn-sm" id="${value.rowId}" onclick="cartDecrement(this.id)">-</button>`
+                        : ` <button type="submit" class="btn btn-success btn-sm" disabled>-</button>`
+                        }
+
+                        <input type="text" value="${value.qty}" min="1" max="100" disabled style="width:25px;">
+                        <button type="submit" id="${value.rowId}" onclick="cartIncrement(this.id)" class="btn btn-danger btn-sm">+</button>
+                    </td>
+
+                    <td class="col-md-1">
+                        <div class="price">$${value.subtotal}</div>
+                    </td>
+
+					<td class="col-md-1 close-btn">
+						<button type="submit" class="" id="${value.rowId}" onclick="CartRemove(this.id)" ><i class="fa fa-times"></i></button>
+					</td>
+				</tr>`
+
+               });
+
+               $('#cartPage').html(rows);
+
+            }
+        })
+    }
+    cart();
+
+    function CartRemove(id){
+        $.ajax({
+            type:'GET',
+            url: "{{ url('/cart-remove/') }}/"+id,
+            dataType:'json',
+            success:function(data){
+                cart();
+                miniCart();
+                //  start message
+                const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
+
+                     if($.isEmptyObject(data.error)){
+                          Toast.fire({
+                            type: 'success',
+                            title: data.success
+                          })
+                     }else{
+                           Toast.fire({
+                              type: 'error',
+                              title: data.error
+                          })
+					 }
+                    //  end message
+            }
+        });
+    }
+
+    // ============ cart increment==============
+    function cartIncrement(rowId){
+        $.ajax({
+            type:'GET',
+            url: "{{ url('/cart-increment/') }}/"+rowId,
+            dataType:'json',
+            success:function(data){
+                cart();
+                miniCart();
+            }
+        });
+    }
+    // ============ cart increment end==============
+
+// ============ cart deccrement==============
+    function cartDecrement(rowId){
+        $.ajax({
+            type:'GET',
+            url: "{{ url('/cart-decrement/') }}/"+rowId,
+            dataType:'json',
+            success:function(data){
+                cart();
+                miniCart();
+            }
+        });
+ }
+
+
+</script>
+{{-- ================= end cart page ====================== --}}
 
 </body>
 
