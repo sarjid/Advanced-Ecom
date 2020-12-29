@@ -832,11 +832,11 @@
                    rows += `<tr>
 					<td class="col-md-2"><img src="/${value.options.image}" alt="imga" style="height:60px; width:60px;"></td>
 					<td class="col-md-2">
-						<div class="product-name"><a href="#">${value.name}</a></div>
+						<div class="product-name"><strong>${value.name}</strong></div>
 
-						<div class="price">
+						<strong>
                         $${value.price}
-						</div>
+						</strong>
 					</td>
 
                     <td class="col-md-2">
@@ -863,7 +863,7 @@
                     </td>
 
                     <td class="col-md-1">
-                        <div class="price">$${value.subtotal}</div>
+                        <strong>$${value.subtotal}</strong>
                     </td>
 
 					<td class="col-md-1 close-btn">

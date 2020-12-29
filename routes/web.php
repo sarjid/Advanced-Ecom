@@ -5,7 +5,9 @@ use App\Http\Controllers\User\UserController;
 Use App\Http\Controllers\Admin\AdminController;
 Use App\Http\Controllers\Admin\BrandController;
 Use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ShippingAreaController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Fontend\CartController;
 use App\Http\Controllers\User\CartPageController;
@@ -73,6 +75,36 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     Route::get('slider/delete/{id}',[SliderController::class,'destroy']);
     Route::get('slider-inactive/{id}',[SliderController::class,'inactive']);
     Route::get('slider-active/{id}',[SliderController::class,'active']);
+    //coupon
+    Route::get('coupon',[CouponController::class,'create'])->name('coupon');
+    Route::post('coupon/store',[CouponController::class,'store'])->name('coupon-store');
+    Route::get('coupon-edit/{id}',[CouponController::class,'edit']);
+    Route::post('coupon/update',[CouponController::class,'update'])->name('coupon-update');
+    Route::get('coupon-delete/{id}',[CouponController::class,'destroy']);
+    //shipping area
+    //division
+    Route::get('division',[ShippingAreaController::class,'createDivision'])->name('division');
+    Route::post('division/store',[ShippingAreaController::class,'divisionStore'])->name('division-store');
+    Route::get('division-edit/{id}',[ShippingAreaController::class,'divisionEdit']);
+    Route::post('division/update',[ShippingAreaController::class,'divisionUpdate'])->name('division-update');
+    Route::get('division-delete/{id}',[ShippingAreaController::class,'divisionDestroy']);
+    //district
+    Route::get('district',[ShippingAreaController::class,'districtCreate'])->name('district');
+    Route::post('district/store',[ShippingAreaController::class,'districtStore'])->name('district-store');
+    Route::get('district-edit/{id}',[ShippingAreaController::class,'districtEdit']);
+    Route::post('district/update',[ShippingAreaController::class,'districtUpdate'])->name('district-update');
+    Route::get('district-delete/{id}',[ShippingAreaController::class,'districtDestroy']);
+    //state
+    Route::get('state',[ShippingAreaController::class,'stateCreate'])->name('state');
+    Route::get('district-get/ajax/{division_id}',[ShippingAreaController::class,'getDistrictAjax']);
+
+    Route::post('state/store',[ShippingAreaController::class,'stateStore'])->name('state-store');
+    Route::get('state-edit/{id}',[ShippingAreaController::class,'stateEdit']);
+    Route::post('state/update',[ShippingAreaController::class,'stateUpdate'])->name('state-update');
+    Route::get('state-delete/{id}',[ShippingAreaController::class,'stateDestroy']);
+
+
+
 });
 
 // ====================================== User Routes =====================================
@@ -87,10 +119,6 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
     Route::get('wishlist',[WishlistController::class,'create'])->name('wishlist');
     Route::get('/get-wishlist-product',[WishlistController::class,'readAllProduct']);
     Route::get('/wishlist-remove/{id}',[WishlistController::class,'destory']);
-
-
-
-
 
 });
 
