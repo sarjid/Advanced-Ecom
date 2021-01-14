@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\ShippingAreaController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Fontend\CartController;
 use App\Http\Controllers\User\CartPageController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\WishlistController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -119,7 +121,12 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
     Route::get('wishlist',[WishlistController::class,'create'])->name('wishlist');
     Route::get('/get-wishlist-product',[WishlistController::class,'readAllProduct']);
     Route::get('/wishlist-remove/{id}',[WishlistController::class,'destory']);
-
+    //checkout
+    Route::get('district-get/ajax/{division_id}',[CheckoutController::class,'getDistrictWithAjax']);
+    Route::get('state-get/ajax/{district_id}',[CheckoutController::class,'getStateWithAjax']);
+    Route::post('payment',[CheckoutController::class,'storeCheckout'])->name('user.checkout.store');
+    //stripe payment
+    Route::post('stripe/order-complete',[StripeController::class,'store'])->name('stripe.order');
 });
 
 // ====================================== Fontend Routes =====================================
@@ -147,4 +154,11 @@ Route::post('/add-to-wishlist/{product_id}',[CartController::class,'addToWishlis
  Route::get('/cart-remove/{rowId}',[CartController::class,'destory']);
  Route::get('/cart-increment/{rowId}',[CartController::class,'cartIncrement']);
  Route::get('/cart-decrement/{rowId}',[CartController::class,'cartDecrement']);
+ //coupon
+ Route::post('/coupon-apply',[CartController::class,'couponApply']);
+ Route::get('coupon-calculation',[CartController::class,'couponCalcaultion']);
+ Route::get('coupon-remove',[CartController::class,'removeCoupon']);
+//checkout
+Route::get('user/checkout',[CartController::class,'checkoutCreate'])->name('checkout');
+
 

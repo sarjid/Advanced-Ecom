@@ -47,7 +47,7 @@
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <!-- Starlight CSS -->
     <link rel="stylesheet" href="{{ asset('backend') }}/css/starlight.css">
-    
+
   </head>
 
   <body>
@@ -267,44 +267,44 @@
     <script>
       $(function(){
         'use strict';
-    
+
         $('.select2').select2({
           minimumResultsForSearch: Infinity
         });
-    
+
         // Select2 by showing the search
         $('.select2-show-search').select2({
           minimumResultsForSearch: ''
         });
-    
+
         // Select2 with tagging support
         $('.select2-tag').select2({
           tags: true,
           tokenSeparators: [',', ' ']
         });
-    
+
         // Datepicker
         $('.fc-datepicker').datepicker({
           showOtherMonths: true,
           selectOtherMonths: true
         });
-    
+
         $('#datepickerNoOfMonths').datepicker({
           showOtherMonths: true,
           selectOtherMonths: true,
           numberOfMonths: 2
         });
-    
+
         // Color picker
         $('#colorpicker').spectrum({
           color: '#17A2B8'
         });
-    
+
         $('#showAlpha').spectrum({
           color: 'rgba(23,162,184,0.5)',
           showAlpha: true
         });
-    
+
         $('#showPaletteOnly').spectrum({
             showPaletteOnly: true,
             showPalette:true,
@@ -314,7 +314,7 @@
                 ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
             ]
         });
-    
+
       });
     </script>
     <script>
@@ -379,7 +379,12 @@
     <script src="{{ asset('backend') }}/js/ResizeSensor.js"></script>
     <script src="{{ asset('backend') }}/js/dashboard.js"></script>
     <script src="{{ asset('backend') }}/lib/highlightjs/highlight.pack.js"></script>
-
+    <script type="text/javascript" src="{{ asset('common') }}/jquery.form-validator.min.js"></script>
+    <script>
+        $.validate({
+          lang: 'en'
+        });
+      </script>
   <script type="text/javascript" src="{{ asset('backend') }}/lib/toastr/toastr.min.js"></script>
     <script>
       @if(Session::has('message'))
@@ -392,7 +397,7 @@
             case 'success':
                 toastr.success(" {{Session::get('message')}} ");
                 break;
-                
+
             case 'warning':
                 toastr.warning(" {{Session::get('message')}} ");
                 break;
