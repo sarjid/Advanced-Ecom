@@ -82,6 +82,5 @@ class StripeController extends Controller
         );
         return Redirect()->route('user.dashboard')->with($notification);
 
-
     }
 }

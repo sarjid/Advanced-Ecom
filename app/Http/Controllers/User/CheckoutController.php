@@ -7,6 +7,7 @@ use App\Models\ShipDistrict;
 use App\Models\ShipState;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
@@ -33,12 +34,21 @@ class CheckoutController extends Controller
         $data['state_id'] = $request->state_id;
         $data['notes'] = $request->notes;
         $cartTotal = Cart::total();
+        $carts = Cart::content();
+        if (Session::has('coupon')) {
+            $total_amount = Session::get('coupon')['total_amount'];
+        }else {
+            $total_amount = round(Cart::total());
+        }
 
         if ($request->payment_method == 'stripe') {
             return view('fontend.payment.stripe',compact('data','cartTotal'));
-        }elseif ($request->payment_method == 'card') {
-            return 'card';
-        }else {
+        }elseif ($request->payment_method == 'sslHost') {
+            return view('fontend.payment.hostedPayment',compact('data','total_amount','carts'));
+        }elseif ($request->payment_method == 'sslEasy') {
+            return view('fontend.payment.easyPayment',compact('data','total_amount','carts'));
+        }else
+        {
             return 'handcash';
         }
     }
