@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,18 +38,18 @@ class UserController extends Controller
             'alert-type'=>'success'
         );
         return Redirect()->back()->with($notification);
-        
+
     }
 
-    // imag page 
+    // imag page
     public function imagePage(){
         return view('user.change-image');
     }
 
-    //update image 
+    //update image
     public function updateImage(Request $request){
             $old_image = $request->old_image;
-          
+
             if (User::findOrFail(Auth::id())->image == 'fontend/media/avatar.png') {
                 $image = $request->file('image');
                 $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
@@ -80,13 +81,13 @@ class UserController extends Controller
             }
     }
 
-    // update password 
+    // update password
 
     public function updatePassPage(){
         return view('user.password');
     }
 
-    //store password 
+    //store password
     public function storePassword(Request $request){
         $request->validate([
             'old_password' => 'required',
@@ -127,5 +128,13 @@ class UserController extends Controller
         );
         return Redirect()->back()->with($notification);
        }
+    }
+
+
+    // ================================================ Orders ================================
+    // create
+    public function orderCreate(){
+        $orders = Order::where('user_id',Auth::id())->orderBy('id','DESC')->get();
+        return view('user.order.orders',compact('orders'));
     }
 }

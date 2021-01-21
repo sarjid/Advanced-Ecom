@@ -6,9 +6,11 @@
 
       <a href="{{ route('update-password') }}" class="btn btn-primary btn-sm btn-block">Update Password</a>
 
+      <a href="{{ route('my-orders') }}" class="btn btn-primary btn-sm btn-block">Orders</a>
+
       <a href="{{ route('logout') }}" class="btn btn-danger btn-sm btn-block" onclick="event.preventDefault();
     document.getElementById('logout-form').submit();"> Log Out</a>
 
-    
+
     </ul>
   </div>

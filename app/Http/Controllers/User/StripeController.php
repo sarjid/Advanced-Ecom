@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Mail\orderMail;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class StripeController extends Controller
@@ -29,7 +31,6 @@ class StripeController extends Controller
         'source' => $token,
         'metadata' => ['order_id' => uniqid()],
         ]);
-
 
 
         $order_id = Order::insertGetId([
@@ -55,7 +56,19 @@ class StripeController extends Controller
                 'order_year' => Carbon::now()->format('Y'),
                 'status' => 'pending',
                 'created_at' => Carbon::now(),
-        ]);
+            ]);
+
+            $invoice = Order::findOrFail($order_id);
+
+        //start send email
+            $data = [
+                'invoice_no' => $invoice->invoice_no,
+                'amount' => $total_amount,
+            ];
+
+            Mail::to($request->email)->send(new orderMail($data));
+
+        //end send email
 
         $carts = Cart::content();
         foreach ($carts as $cart ) {

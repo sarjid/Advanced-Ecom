@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Library\SslCommerz\SslCommerzNotification;
+use App\Mail\orderMail;
+use App\Models\Order;
 use Carbon\Carbon;
 use App\Models\OrderItem;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class SslCommerzPaymentController extends Controller
 {
@@ -70,11 +74,7 @@ class SslCommerzPaymentController extends Controller
           $post_data['product_category'] = "Goods";
           $post_data['product_profile'] = "physical-goods";
 
-          # OPTIONAL PARAMETERS
-          $post_data['value_a'] = "ref001";
-          $post_data['value_b'] = "ref002";
-          $post_data['value_c'] = "ref003";
-          $post_data['value_d'] = "ref004";
+
 
           #Before  going to initiate the payment order status need to insert or update as Pending.
           $update_product = DB::table('orders')
@@ -115,6 +115,13 @@ class SslCommerzPaymentController extends Controller
                     'created_at' => Carbon::now(),
                 ]);
             }
+
+            $invoice = Order::findOrFail($order_id);
+            # OPTIONAL PARAMETERS
+            $post_data['value_a'] = $invoice->invoice_no;
+            $post_data['value_b'] = $request->email;
+            $post_data['value_c'] = "ref003";
+            $post_data['value_d'] = "ref004";
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
@@ -177,12 +184,6 @@ class SslCommerzPaymentController extends Controller
         $post_data['product_category'] = "Goods";
         $post_data['product_profile'] = "physical-goods";
 
-        # OPTIONAL PARAMETERS
-        $post_data['value_a'] = "ref001";
-        $post_data['value_b'] = "ref002";
-        $post_data['value_c'] = "ref003";
-        $post_data['value_d'] = "ref004";
-
 
         #Before  going to initiate the payment order status need to update as Pending.
         $update_product = DB::table('orders')
@@ -224,6 +225,13 @@ class SslCommerzPaymentController extends Controller
               ]);
           }
 
+          $invoice = Order::findOrFail($order_id);
+          # OPTIONAL PARAMETERS
+          $post_data['value_a'] = $invoice->invoice_no;
+          $post_data['value_b'] = $requestData['cus_email'];
+          $post_data['value_c'] = "ref003";
+          $post_data['value_d'] = "ref004";
+
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
         $payment_options = $sslc->makePayment($post_data, 'checkout', 'json');
@@ -237,7 +245,7 @@ class SslCommerzPaymentController extends Controller
 
     public function success(Request $request)
     {
-        echo "Transaction is Successful";
+        // echo "Transaction is Successful";
 
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
@@ -263,7 +271,28 @@ class SslCommerzPaymentController extends Controller
                     ->where('transaction_id', $tran_id)
                     ->update(['status' => 'Processing']);
 
-                echo "<br >Transaction is successfully Completed";
+                // echo "<br >Transaction is successfully Completed";
+
+                 //start send email
+                    $data = [
+                        'invoice_no' => $request->value_a,
+                        'amount' => $amount,
+                    ];
+
+                    Mail::to($request->value_b)->send(new orderMail($data));
+
+                //end send email
+
+                if (Session::has('coupon')) {
+                    Session::forget('coupon');
+                }
+                Cart::destroy();
+                $notification=array(
+                    'message'=>'Your Order Place Success',
+                    'alert-type'=>'success'
+                );
+                return Redirect()->route('user.dashboard')->with($notification);
+
             } else {
                 /*
                 That means IPN did not work or IPN URL was not set in your merchant panel and Transation validation failed.

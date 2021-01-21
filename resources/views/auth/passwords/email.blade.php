@@ -17,8 +17,13 @@
 		<div class="container">
 			<div class="sign-in-page">
 				<div class="row">
-					<!-- Sign-in -->			
+					<!-- Sign-in -->
 					<div class="col-md-12 col-sm-12 sign-in">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 						<h4 class="">Forget Password</h4>
 						<form class="register-form outer-top-xs" role="form" method="POST" action="{{ route('password.email') }}">
 							@csrf
@@ -33,12 +38,12 @@
 							</div>
 							<button type="submit" class="btn-upper btn btn-primary checkout-page-button"> {{ __('Send Password Reset Link') }}</button>
 							<a href="{{ route('login') }}" class="forgot-password pull-right">Return to login</a>
-							
-						</form>					
+
+						</form>
 					</div>
 					<!-- Sign-in -->
 				</div><!-- /.row -->
-						
+
 				</div><!-- /.sigin-in-->
 
 	</div><!-- /.container -->

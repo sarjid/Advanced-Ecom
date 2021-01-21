@@ -963,7 +963,9 @@
             url: "{{ url('/coupon-apply') }}",
             success:function(data){
                 couponCalculation();
-                $('#couponField').hide();
+                if (data.validity == true) {
+                 $('#couponField').hide();
+                }
                 //    $('#couponField').css("display","none");
                  //  start message
                  const Toast = Swal.mixin({
