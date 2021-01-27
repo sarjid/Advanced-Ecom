@@ -14,4 +14,19 @@ class Order extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function division(){
+        return $this->belongsTo('App\Models\ShipDivision','division_id');
+    }
+    public function district(){
+        return $this->belongsTo('App\Models\ShipDistrict','district_id');
+    }
+
+    public function state(){
+        return $this->belongsTo('App\Models\ShipState','state_id');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\Models\User','user_id');
+    }
 }

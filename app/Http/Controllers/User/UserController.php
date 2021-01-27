@@ -4,12 +4,14 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use PDF;
 
 class UserController extends Controller
 {
@@ -136,5 +138,24 @@ class UserController extends Controller
     public function orderCreate(){
         $orders = Order::where('user_id',Auth::id())->orderBy('id','DESC')->get();
         return view('user.order.orders',compact('orders'));
+    }
+
+    //view order
+    public function orderView($order_id){
+        $order = Order::with('division','district','state','user')->where('id',$order_id)->where('user_id',Auth::id())->first();
+        $orderItems = OrderItem::with('product')->where('order_id',$order_id)->orderBy('id','DESC')->get();
+        return view('user.order.view-order',compact('order','orderItems'));
+    }
+
+    //invoice download
+    public function invoiceDownload($order_id){
+        $order = Order::with('division','district','state','user')->where('id',$order_id)->where('user_id',Auth::id())->first();
+        $orderItems = OrderItem::with('product')->where('order_id',$order_id)->orderBy('id','DESC')->get();
+        // return view('user.order.invoice',compact('order','orderItems'));
+        $pdf = PDF::loadView('user.order.invoice',compact('order','orderItems'))->setPaper('a4')->setOptions([
+            'tempDir' => public_path(),
+            'chroot' => public_path(),
+        ]);
+        return $pdf->download('invoice.pdf');
     }
 }

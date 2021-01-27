@@ -1079,8 +1079,6 @@
     }
 </script>
 
-
-</body>
 <!-- If you want to use the popup integration, -->
 <script type="text/javascript">
     var obj = {};
@@ -1120,4 +1118,6 @@
         window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
     })(window, document);
 </script>
+
+</body>
 </html>
