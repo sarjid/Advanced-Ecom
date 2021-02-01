@@ -6,6 +6,7 @@ Use App\Http\Controllers\Admin\AdminController;
 Use App\Http\Controllers\Admin\BrandController;
 Use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ShippingAreaController;
 use App\Http\Controllers\Admin\SliderController;
@@ -105,6 +106,22 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     Route::get('state-edit/{id}',[ShippingAreaController::class,'stateEdit']);
     Route::post('state/update',[ShippingAreaController::class,'stateUpdate'])->name('state-update');
     Route::get('state-delete/{id}',[ShippingAreaController::class,'stateDestroy']);
+    //orders
+    Route::get('pending-orders',[OrderController::class,'pendingOrder'])->name('pending-orders');
+    Route::get('orders-view/{id}',[OrderController::class,'viewOrders']);
+    Route::get('confirmed-orders',[OrderController::class,'confirmOrder'])->name('confirmed-orders');
+    Route::get('processing-orders',[OrderController::class,'processingOrder'])->name('processing-orders');
+    Route::get('picked-orders',[OrderController::class,'pickedOrders'])->name('picked-orders');
+    Route::get('shipped-orders',[OrderController::class,'shippedOrders'])->name('shipped-orders');
+    Route::get('delivered-orders',[OrderController::class,'deliveredOrders'])->name('delivered-orders');
+    Route::get('cancel-orders',[OrderController::class,'cancelOrders'])->name('cancel-orders');
+    //status
+    Route::get('pending-to-confirm/{order_id}',[OrderController::class,'pendingToConfirm']);
+    Route::get('confirm-to-processing/{order_id}',[OrderController::class,'confirmToProcess']);
+    Route::get('processing-to-picked/{order_id}',[OrderController::class,'processToPicked']);
+    Route::get('picked-to-shipped/{order_id}',[OrderController::class,'pickedToShipped']);
+    Route::get('shipped-to-delivery/{order_id}',[OrderController::class,'shippedToDelivery']);
+
 
 });
 
