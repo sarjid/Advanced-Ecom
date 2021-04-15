@@ -86,3 +86,25 @@ $(document).on("click", "#order", function(e){
     });
 });
 
+$(document).on("click", "#cancel", function(e){
+    e.preventDefault();
+    var link = $(this).attr("href");
+
+    swal({
+        title: "Are you sure To Cancel?",
+        text:  "Once Cancel, you will not go Back Step Again!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+            window.location.href = link;
+
+        } else {
+            swal("Not Cancel!");
+        }
+
+    });
+});
+

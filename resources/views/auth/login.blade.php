@@ -17,12 +17,15 @@
 	<div class="container">
 		<div class="sign-in-page">
 			<div class="row">
-				<!-- Sign-in -->			
+				<!-- Sign-in -->
 <div class="col-md-6 col-sm-6 sign-in">
+    @error('banned')
+        <h3 class="text-danger">{{ $message }}</h3>
+    @enderror
 	<h4 class="">Sign in</h4>
 	<div class="social-sign-in outer-top-xs">
-		<a href="#" class="facebook-sign-in"><i class="fa fa-facebook"></i> Sign In with Facebook</a>
-		<a href="#" class="twitter-sign-in"><i class="fa fa-twitter"></i> Sign In with Twitter</a>
+		<a href="{{ route('login.facebook') }}" class="facebook-sign-in"><i class="fa fa-facebook"></i> Sign In with Facebook</a>
+		<a href="{{ route('login.google') }}" class="twitter-sign-in"><i class="fa fa-google"></i> Sign In with google</a>
 	</div>
     <form class="register-form outer-top-xs" role="form" method="POST" action="{{ route('login') }}">
         @csrf
@@ -51,7 +54,7 @@
 		  	<a href="{{ route('password.request') }}" class="forgot-password pull-right">Forgot your Password?</a>
 		</div>
 	  	<button type="submit" class="btn-upper btn btn-primary checkout-page-button">Login</button>
-	</form>					
+	</form>
 </div>
 <!-- Sign-in -->
 
@@ -103,12 +106,12 @@
 		</div>
 	  	<button type="submit" class="btn-upper btn btn-primary ">Register</button>
 	</form>
-	
-	
-</div>	
-<!-- create a new account -->			
+
+
+</div>
+<!-- create a new account -->
 </div><!-- /.row -->
-        
+
 </div><!-- /.sigin-in-->
 
 </div><!-- /.container -->

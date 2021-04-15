@@ -49,10 +49,10 @@ class AdminController extends Controller
         return view('admin.profile.change-image');
     }
 
-    // admin image store 
+    // admin image store
     public function imgStore(Request $request){
         $old_image = $request->old_image;
-          
+
         if (User::findOrFail(Auth::id())->image == 'fontend/media/avatar.png') {
             $image = $request->file('image');
             $name_gen=hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
@@ -84,7 +84,7 @@ class AdminController extends Controller
     }
  }
 
- /// change password 
+ /// change password
  public function changePass(){
      return view('admin.profile.password');
  }
@@ -130,5 +130,32 @@ class AdminController extends Controller
     return Redirect()->back()->with($notification);
    }
  }
+
+
+ ////////////////////////////// ALl Users ==================
+ public function allUsers(){
+     $users = User::where('role_id','!=',1)->orderBy('id','DESC')->get();
+     return view('admin.users.index',compact('users'));
+ }
+
+    //banned user
+    public function banned($user_id){
+        User::findOrFail($user_id)->update(['isban' => 1]);
+        $notification=array(
+            'message'=>'User Banned',
+            'alert-type'=>'error'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+     //unbanned user
+    public function unBanned($user_id){
+        User::findOrFail($user_id)->update(['isban' => 0]);
+        $notification=array(
+        'message'=>'User UnBanned Success',
+        'alert-type'=>'success'
+    );
+    return Redirect()->back()->with($notification);
+    }
 
 }

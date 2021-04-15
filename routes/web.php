@@ -8,9 +8,12 @@ Use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ShippingAreaController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Fontend\CartController;
+use App\Http\Controllers\Fontend\TrackingController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\User\CartPageController;
 use App\Http\Controllers\User\CheckoutController;
@@ -33,6 +36,11 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     Route::post('image/store',[AdminController::class,'imgStore'])->name('store-image');
     Route::get('change-password',[AdminController::class,'changePass'])->name('change-password');
     Route::post('change-password-store',[AdminController::class,'changePassStore'])->name('change-password-store');
+    //read all users
+    Route::get('all-users',[AdminController::class,'allUsers'])->name('all-users');
+    // banned user
+    Route::get('user-banned/{user_id}',[AdminController::class,'banned']);
+    Route::get('user-unbanned/{user_id}',[AdminController::class,'unBanned']);
     //brand routes
     Route::get('all-brands',[BrandController::class,'index'])->name('brands');
     Route::post('brand/store',[BrandController::class,'brandStore'])->name('brand-store');
@@ -114,14 +122,21 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     Route::get('picked-orders',[OrderController::class,'pickedOrders'])->name('picked-orders');
     Route::get('shipped-orders',[OrderController::class,'shippedOrders'])->name('shipped-orders');
     Route::get('delivered-orders',[OrderController::class,'deliveredOrders'])->name('delivered-orders');
-    Route::get('cancel-orders',[OrderController::class,'cancelOrders'])->name('cancel-orders');
+    Route::get('cancel-orders',[OrderController::class,'cancelOrders'])->name('order-cancel');
     //status
     Route::get('pending-to-confirm/{order_id}',[OrderController::class,'pendingToConfirm']);
+    Route::get('pending-to-cancel/{order_id}',[OrderController::class,'pendingToCancel']);
     Route::get('confirm-to-processing/{order_id}',[OrderController::class,'confirmToProcess']);
     Route::get('processing-to-picked/{order_id}',[OrderController::class,'processToPicked']);
     Route::get('picked-to-shipped/{order_id}',[OrderController::class,'pickedToShipped']);
     Route::get('shipped-to-delivery/{order_id}',[OrderController::class,'shippedToDelivery']);
-
+    //invoice download
+    Route::get('invoice-download/{order_id}',[OrderController::class,'downloadInvoice']);
+    //reports
+    Route::get('reports',[ReportController::class,'index'])->name('reports');
+    Route::post('reports/by-date',[ReportController::class,'reportByDate'])->name('search-by-date');
+    Route::post('reports/by-month',[ReportController::class,'reportByMonth'])->name('search-by-month');
+    Route::post('reports/by-year',[ReportController::class,'reportByYear'])->name('search-by-year');
 
 });
 
@@ -143,12 +158,14 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
     Route::post('payment',[CheckoutController::class,'storeCheckout'])->name('user.checkout.store');
     //stripe payment
     Route::post('stripe/order-complete',[StripeController::class,'store'])->name('stripe.order');
-
     //user orders
     Route::get('orders',[UserController::class,'orderCreate'])->name('my-orders');
     Route::get('order-view/{order_id}',[UserController::class,'orderView']);
     Route::get('invoice-download/{order_id}',[UserController::class,'invoiceDownload']);
-
+    //return orders
+    Route::post('return/orders-submit',[UserController::class,'returnOrderSubmit'])->name('user-return-order');
+    Route::get('return/orders',[UserController::class,'returnOrder'])->name('return-orders');
+    Route::get('cancel/orders',[UserController::class,'cancelOrder'])->name('cancel-orders');
 });
 
 // SSLCOMMERZ Start
@@ -166,7 +183,6 @@ Route::group(['middleware' =>['user','auth']], function(){
     Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 });
 //SSLCOMMERZ END
-
 
 // ====================================== Fontend Routes =====================================
 Route::get('language/bangla',[LanguageController::class,'bangla'])->name('bangla.language');
@@ -200,7 +216,16 @@ Route::post('/add-to-wishlist/{product_id}',[CartController::class,'addToWishlis
 //checkout
 Route::get('user/checkout',[CartController::class,'checkoutCreate'])->name('checkout');
 
+//LARAVEL SOCIATLITE
+//login google
+Route::get('login/google',[LoginController::class,'redirectToGoogle'])->name('login.google');
+Route::get('login/google/callback',[LoginController::class,'handleGoogleCallback']);
+//facebook
+Route::get('login/facebook',[LoginController::class,'redirectToFacebook'])->name('login.facebook');
+Route::get('login/facebook/callback',[LoginController::class,'handleFacebookCallback']);
 
+//Order Track
+Route::post('order/track', [TrackingController::class,'orderTrackNow'])->name('order.track');
 
 
 

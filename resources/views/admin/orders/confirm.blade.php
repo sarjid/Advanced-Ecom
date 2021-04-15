@@ -18,12 +18,12 @@
                   <table id="datatable1" class="table display responsive nowrap">
                     <thead>
                       <tr>
-                        <th class="wd-30p">Date</th>
-                        <th class="wd-30p">Invoice</th>
-                        <th class="wd-25p">Amount</th>
+                        <th class="wd-15p">Date</th>
+                        <th class="wd-15p">Invoice</th>
+                        <th class="wd-20p">Amount</th>
                         <th class="wd-25p">TNX Id</th>
-                        <th class="wd-25p">Status</th>
-                        <th class="wd-20p">Action</th>
+                        <th class="wd-10p">Status</th>
+                        <th class="wd-15p">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -38,7 +38,7 @@
                         </td>
                         <td>
                           <a href="{{ url('admin/orders-view/'.$order->id) }}" class="btn btn-sm btn-primary" title="view data"> <i class="fa fa-eye"></i></a>
-
+                          <a href="{{ url('admin/invoice-download/'.$order->id) }}" class="btn btn-sm btn-danger "><i class="fa fa-download" style="color:white;"></i> </a>
                         </td>
                       </tr>
                       @endforeach

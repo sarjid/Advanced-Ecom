@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 		<!-- Meta -->
 		<meta charset="utf-8">
@@ -70,12 +69,7 @@
 			<div class="cnt-block">
 				<ul class="list-unstyled list-inline">
 					<li class="dropdown dropdown-small">
-						<a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="value">USD </span><b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">USD</a></li>
-							<li><a href="#">INR</a></li>
-							<li><a href="#">GBP</a></li>
-						</ul>
+						<a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="modal" data-target="#exampleModal"><span class="value">Order Track </span></a>
 					</li>
 
 					<li class="dropdown dropdown-small">
@@ -90,7 +84,31 @@
 						</ul>
 					</li>
 				</ul><!-- /.list-unstyled -->
-			</div><!-- /.cnt-cart -->
+            </div><!-- /.cnt-cart -->
+
+            <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('order.track') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Invoice No</label>
+                          <input type="text" name="invoice_no" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="invoice no">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Track Now</button>
+                      </form>
+                </div>
+            </div>
+            </div>
+        </div>
+
 			<div class="clearfix"></div>
 		</div><!-- /.header-top-inner -->
 	</div><!-- /.container -->
@@ -490,6 +508,7 @@
       </div>
     </div>
 </div>
+
 	<!-- JavaScripts placed at the end of the document so the pages load faster -->
 	<script src="{{ asset('fontend') }}/assets/js/jquery-1.11.1.min.js"></script>
 	<script src="{{ asset('fontend') }}/assets/js/bootstrap.min.js"></script>
@@ -1118,6 +1137,7 @@
         window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
     })(window, document);
 </script>
+
 
 </body>
 </html>

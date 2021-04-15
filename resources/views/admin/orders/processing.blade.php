@@ -39,7 +39,7 @@
                         </td>
                         <td>
                           <a href="{{ url('admin/orders-view/'.$order->id) }}" class="btn btn-sm btn-primary" title="view data"> <i class="fa fa-eye"></i></a>
-
+                          <a href="{{ url('admin/invoice-download/'.$order->id) }}" class="btn btn-sm btn-danger "><i class="fa fa-download" style="color:white;"></i> </a>
                         </td>
                       </tr>
                       @endforeach

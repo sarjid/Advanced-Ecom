@@ -8,7 +8,6 @@
           <a class="breadcrumb-item" href="index.html">SHopMama</a>
           <span class="breadcrumb-item active">cancel Orders</span>
         </nav>
-
         <div class="sl-pagebody">
           <div class="row row-sm">
             <div class="col-md-12">
@@ -19,17 +18,17 @@
                   <table id="datatable1" class="table display responsive nowrap">
                     <thead>
                       <tr>
-                        <th class="wd-30p">Date</th>
-                        <th class="wd-30p">Invoice</th>
-                        <th class="wd-25p">Amount</th>
-                        <th class="wd-25p">TNX Id</th>
-                        <th class="wd-25p">Status</th>
+                        <th class="wd-15p">Date</th>
+                        <th class="wd-20p">Invoice</th>
+                        <th class="wd-15p">Amount</th>
+                        <th class="wd-20p">TNX Id</th>
+                        <th class="wd-p10">Status</th>
                         <th class="wd-20p">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach ($orders as $order)
-                      <tr>
+                    <tr>
                         <td>{{ $order->order_date }}</td>
                         <td>{{ $order->invoice_no }}</td>
                         <td>{{ $order->amount }}Tk</td>
@@ -39,9 +38,8 @@
                         </td>
                         <td>
                           <a href="{{ url('admin/orders-view/'.$order->id) }}" class="btn btn-sm btn-primary" title="view data"> <i class="fa fa-eye"></i></a>
-
                         </td>
-                      </tr>
+                    </tr>
                       @endforeach
                     </tbody>
                   </table>
@@ -51,7 +49,5 @@
             </div>
           </div>
         </div>
-
-
     </div>
 @endsection

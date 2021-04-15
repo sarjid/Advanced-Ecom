@@ -84,6 +84,7 @@
                     <li class="list-group-item">
                         @if ($order->status == 'Pending')
                         <a href="{{ url('admin/pending-to-confirm/'.$order->id) }}" class="btn btn-block btn-success" id="confirm">Confirm Order</a>
+                        <a href="{{ url('admin/pending-to-cancel/'.$order->id) }}" class="btn btn-block btn-danger" id="cancel">Cancel Order</a>
                         @elseif($order->status == 'Confirm')
                         <a href="{{ url('admin/confirm-to-processing/'.$order->id) }}" class="btn btn-block btn-success" id="processing">Processing</a>
                         @elseif($order->status == 'Processing')
@@ -92,6 +93,7 @@
                         <a href="{{ url('admin/picked-to-shipped/'.$order->id) }}" class="btn btn-block btn-success" id="order">Shipped</a>
                         @elseif($order->status == 'Shipped')
                         <a href="{{ url('admin/shipped-to-delivery/'.$order->id) }}" class="btn btn-block btn-success" id="order">Delevery</a>
+
                         @endif
                     </li>
 

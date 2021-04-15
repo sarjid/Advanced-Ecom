@@ -382,8 +382,10 @@
 														<div class="action text-right">
 															<button class="btn btn-primary btn-upper">SUBMIT REVIEW</button>
 														</div><!-- /.action -->
+                                                    </form><!-- /.cnt-form -->
 
-													</form><!-- /.cnt-form -->
+                                                    <div class="fb-comments" data-href="{{ Request::url() }}" data-width="" data-numposts="10"></div>
+
 												</div><!-- /.form-container -->
 											</div><!-- /.review-form -->
 
@@ -490,21 +492,14 @@
                                     <div class="action">
                                         <ul class="list-unstyled">
                                             <li class="add-cart-button btn-group">
-                                                <button data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Add Cart">
+                                                <button class="btn btn-primary icon" type="button" title="Add Cart" data-toggle="modal" data-target="#cartModal" id="{{ $product->id }}" onclick="productView(this.id)">
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </button>
-                                                <button class="btn btn-primary cart-btn" type="button">@if (session()->get('language') == 'bangla') কার্টেসংযুক্ত করুন@else Add to cart @endif</button>
+                                                <button class="btn btn-primary cart-btn" type="button" >@if (session()->get('language') == 'bangla') কার্টেসংযুক্ত করুন@else Add to cart @endif></button>
                                             </li>
-                                            <li class="lnk wishlist">
-                                                <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Wishlist">
+                                                <button class="btn btn-primary icon" type="button" title="Add to WIshlist" id="{{ $product->id }}" onclick="addToWishlist(this.id)">
                                                     <i class="icon fa fa-heart"></i>
-                                                </a>
-                                            </li>
-                                            <li class="lnk">
-                                                <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Compare">
-                                                    <i class="fa fa-signal" aria-hidden="true"></i>
-                                                </a>
-                                            </li>
+                                                </button>
                                         </ul>
                                     </div><!-- /.action -->
                                 </div><!-- /.cart -->
@@ -522,5 +517,6 @@
 		</div><!-- /.row -->
 	</div><!-- /.container -->
 </div><!-- /.body-content -->
-
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=157782379562934&autoLogAppEvents=1" nonce="WhS30MCS"></script>
 @endsection
