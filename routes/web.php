@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ShippingAreaController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Fontend\CartController;
+use App\Http\Controllers\Fontend\SearchController;
 use App\Http\Controllers\Fontend\TrackingController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\User\CartPageController;
@@ -166,6 +167,8 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
     Route::post('return/orders-submit',[UserController::class,'returnOrderSubmit'])->name('user-return-order');
     Route::get('return/orders',[UserController::class,'returnOrder'])->name('return-orders');
     Route::get('cancel/orders',[UserController::class,'cancelOrder'])->name('cancel-orders');
+
+
 });
 
 // SSLCOMMERZ Start
@@ -226,6 +229,8 @@ Route::get('login/facebook/callback',[LoginController::class,'handleFacebookCall
 
 //Order Track
 Route::post('order/track', [TrackingController::class,'orderTrackNow'])->name('order.track');
-
+ //search product
+ Route::get('/search-products',[SearchController::class,'searchProduct'])->name('search.product');
+ Route::post('/find-products',[SearchController::class,'findProducts']);
 
 
