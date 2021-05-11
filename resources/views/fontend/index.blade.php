@@ -53,7 +53,19 @@
                                         @else
                                         <a href="detail.html">{{ $product->product_name_en }}</a>
                                         @endif</h3>
-                                    <div class="rating rateit-small"></div>
+                                    @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                                     <div class="product-price">
                                         @if ($product->discount_price == NULL)
                                 @if (session()->get('language') == 'bangla')
@@ -115,7 +127,19 @@
                                             @else
                                             <a href="detail.html">{{ $product->product_name_en }}</a>
                                             @endif</h3>
-                                        <div class="rating rateit-small"></div>
+                                        @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                                         <div class="product-price">
                                             @if ($product->discount_price == NULL)
                                     @if (session()->get('language') == 'bangla')
@@ -306,7 +330,19 @@
                                             <a href="detail.html">{{ $product->product_name_en }}</a>
                                             @endif
                                         </h3>
-                                        <div class="rating rateit-small"></div>
+                                    @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                                         <div class="description"></div>
                                         <div class="product-price">
                                         @if ($product->discount_price == NULL)
@@ -392,7 +428,19 @@
                                     <a href="detail.html">{{ $product->product_name_en }}</a>
                                     @endif
                                 </h3>
-                                <div class="rating rateit-small"></div>
+                                @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                                 <div class="description"></div>
                                 <div class="product-price">
                                 @if ($product->discount_price == NULL)
@@ -505,7 +553,19 @@
                                 <a href="detail.html">{{ $product->product_name_en }}</a>
                                 @endif
                             </h3>
-                            <div class="rating rateit-small"></div>
+                            @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                            @else
+                                <span class="text-danger">No Review</span>
+                            @endif
                             <div class="description"></div>
                             <div class="product-price">
                             @if ($product->discount_price == NULL)
@@ -589,7 +649,19 @@
                                 <a href="detail.html">{{ $product->product_name_en }}</a>
                                 @endif
                             </h3>
-                            <div class="rating rateit-small"></div>
+                            @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                    @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                    @endfor
+                                         ({{ count($reviewProducts) }})
+                            @else
+                                <span class="text-danger">No Review</span>
+                            @endif
                             <div class="description"></div>
                             <div class="product-price">
                             @if ($product->discount_price == NULL)
@@ -674,7 +746,19 @@
                                 <a href="detail.html">{{ $product->product_name_en }}</a>
                                 @endif
                             </h3>
-                            <div class="rating rateit-small"></div>
+                            @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                             <div class="description"></div>
                             <div class="product-price">
                             @if ($product->discount_price == NULL)
@@ -758,7 +842,19 @@
                                 <a href="detail.html">{{ $product->product_name_en }}</a>
                                 @endif
                             </h3>
-                            <div class="rating rateit-small"></div>
+                            @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                             <div class="description"></div>
                             <div class="product-price">
                             @if ($product->discount_price == NULL)
@@ -841,7 +937,19 @@
                                 <a href="detail.html">{{ $product->product_name_en }}</a>
                                 @endif
                             </h3>
-                            <div class="rating rateit-small"></div>
+                            @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                             <div class="description"></div>
                             <div class="product-price">
                             @if ($product->discount_price == NULL)
@@ -1062,7 +1170,19 @@
                                 <div class="col2 col-xs-7">
                                     <div class="product-info">
                                         <h3 class="name"><a href="#">Floral Print Buttoned</a></h3>
-                                        <div class="rating rateit-small"></div>
+                                        @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                                         <div class="product-price">
                                         <span class="price">$450.99</span>
                                     </div><!-- /.product-price -->
@@ -1086,7 +1206,19 @@
                                 <div class="col2 col-xs-7">
                                     <div class="product-info">
                                         <h3 class="name"><a href="#">Floral Print Buttoned</a></h3>
-                                        <div class="rating rateit-small"></div>
+                                        @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                                         <div class="product-price">
                                         <span class="price">
                                             $450.99				</span>
@@ -1118,7 +1250,19 @@
             <div class="col2 col-xs-7">
                 <div class="product-info">
                     <h3 class="name"><a href="#">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
+                    @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                     <div class="product-price">
                         <span class="price">$450.99</span>
                     </div><!-- /.product-price -->
@@ -1143,7 +1287,19 @@
                                     <div class="col2 col-xs-7">
                                         <div class="product-info">
                                             <h3 class="name"><a href="#">Floral Print Buttoned</a></h3>
-                                            <div class="rating rateit-small"></div>
+                                            @if (App\Models\ProductReview::where('product_id',$product->id)->first())
+                                        @php
+                                             $reviewProducts = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->latest()->get();
+                                            $rating = App\Models\ProductReview::where('product_id',$product->id)->where('status','approve')->avg('rating');
+                                            $avgRating = number_format($rating,1);
+                                        @endphp
+                                        @for ($i =1 ; $i <= 5 ; $i++)
+                                        <span style="color: red; font-size:15px;" class="glyphicon glyphicon-star{{ ($i <= $avgRating) ? '' : '-empty' }}"></span>
+                                         @endfor
+                                         ({{ count($reviewProducts) }})
+                                    @else
+                                         <span class="text-danger">No Review</span>
+                                    @endif
                                             <div class="product-price">
                                             <span class="price">$450.99	</span>
                                         </div><!-- /.product-price -->

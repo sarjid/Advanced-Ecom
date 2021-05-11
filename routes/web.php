@@ -8,6 +8,7 @@ Use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductReviewController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ShippingAreaController;
 use App\Http\Controllers\Admin\SliderController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Fontend\TrackingController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\User\CartPageController;
 use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\WishlistController;
 use Illuminate\Support\Facades\Auth;
@@ -110,7 +112,6 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     //state
     Route::get('state',[ShippingAreaController::class,'stateCreate'])->name('state');
     Route::get('district-get/ajax/{division_id}',[ShippingAreaController::class,'getDistrictAjax']);
-
     Route::post('state/store',[ShippingAreaController::class,'stateStore'])->name('state-store');
     Route::get('state-edit/{id}',[ShippingAreaController::class,'stateEdit']);
     Route::post('state/update',[ShippingAreaController::class,'stateUpdate'])->name('state-update');
@@ -138,6 +139,13 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     Route::post('reports/by-date',[ReportController::class,'reportByDate'])->name('search-by-date');
     Route::post('reports/by-month',[ReportController::class,'reportByMonth'])->name('search-by-month');
     Route::post('reports/by-year',[ReportController::class,'reportByYear'])->name('search-by-year');
+
+    //customer review
+    Route::get('review-create',[ProductReviewController::class,'create'])->name('customer.review');
+    Route::get('review-delete/{review_id}',[ProductReviewController::class,'destroy']);
+    Route::get('review-approve/{review_id}',[ProductReviewController::class,'approveNow']);
+
+
 
 });
 
@@ -168,6 +176,10 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
     Route::get('return/orders',[UserController::class,'returnOrder'])->name('return-orders');
     Route::get('cancel/orders',[UserController::class,'cancelOrder'])->name('cancel-orders');
 
+
+    //product review
+    Route::get('review-create/{product_id}',[ReviewController::class,'create']);
+    Route::post('store/review',[ReviewController::class,'store'])->name('store.review');
 
 });
 
@@ -227,10 +239,8 @@ Route::get('login/google/callback',[LoginController::class,'handleGoogleCallback
 Route::get('login/facebook',[LoginController::class,'redirectToFacebook'])->name('login.facebook');
 Route::get('login/facebook/callback',[LoginController::class,'handleFacebookCallback']);
 
-//Order Track
 Route::post('order/track', [TrackingController::class,'orderTrackNow'])->name('order.track');
+//Order Track
  //search product
  Route::get('/search-products',[SearchController::class,'searchProduct'])->name('search.product');
  Route::post('/find-products',[SearchController::class,'findProducts']);
-
-

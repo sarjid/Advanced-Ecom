@@ -166,8 +166,12 @@
 
                                           <td class="col-md-1">
                                           <strong>৳{{ $item->price }} ({{ $item->price * $item->qty }})</strong>
-
+                                        @if ($order->status == 'Delivered')
+                                          <td class="col-md-1">
+                                            <a href="{{ url('user/review-create/'.$item->product_id) }}">write a review</a>
                                           </td>
+                                        @endif
+
                                       </tr>
                                    @endforeach
                                   </tbody>

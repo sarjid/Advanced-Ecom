@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MultiImg;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,11 @@ class IndexController extends Controller
         $multiImgs = MultiImg::where('product_id',$product_id)->get();
         $cat_id = $product->category_id;
         $relatedProducts = Product::where('category_id',$cat_id)->where('id','!=',$product_id)->orderBy('id','DESC')->get();
-        return view('fontend.single-product',compact('product','multiImgs','product_color_en','product_color_bn','product_size_en','product_size_bn','relatedProducts'));
+        //prouct review
+        $reviewProducts = ProductReview::with('user')->where('product_id',$product_id)->where('status','approve')->latest()->get();
+        $rating = ProductReview::where('product_id',$product_id)->where('status','approve')->avg('rating');
+        $avgRating = number_format($rating,1);
+        return view('fontend.single-product',compact('product','multiImgs','product_color_en','product_color_bn','product_size_en','product_size_bn','relatedProducts','reviewProducts','avgRating'));
     }
 
     //tag wise product
@@ -83,7 +88,7 @@ class IndexController extends Controller
             $product_color = explode(',',$color);
             $size = $product->product_size_en;
             $produt_size = explode(',',$size);
-            
+
         return response()->json(array(
             'product' => $product,
             'color' => $product_color,
