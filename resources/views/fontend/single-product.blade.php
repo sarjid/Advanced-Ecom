@@ -1,6 +1,13 @@
 @extends('layouts.fontend-master')
 @section('content')
 @section('title') {{ $product->product_name_en }} @endsection
+@section('meta')
+<meta property="og:title" content="{{ $product->product_name_en }}" />
+<meta property="og:url" content="{{Request::fullUrl()}}" />
+<meta property="og:image" content="{{URL::to($product->product_thambnail)}}" />
+<meta property="og:description" content="{{ $product->short_descp_en }}"/>
+<meta property="og:site_name" content="Shopmama" />
+@endsection
 @php
  function bn_price($str){
     $en = array(1,2,3,4,5,6,7,8,9,0);
@@ -193,15 +200,8 @@
 
 									<div class="col-sm-6">
 										<div class="favorite-button m-t-10">
-											<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" href="#">
-											    <i class="fa fa-heart"></i>
-											</a>
-											<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Add to Compare" href="#">
-											   <i class="fa fa-signal"></i>
-											</a>
-											<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="E-mail" href="#">
-											    <i class="fa fa-envelope"></i>
-											</a>
+                                            {{-- //product share  --}}
+											<div class="sharethis-inline-share-buttons" data-href="{{ Request::url() }}"></div>
 										</div>
 									</div>
 
@@ -277,7 +277,9 @@
 						<div class="col-sm-3">
 							<ul id="product-tabs" class="nav nav-tabs nav-tab-cell">
 								<li class="active"><a data-toggle="tab" href="#description">DESCRIPTION</a></li>
-								<li><a data-toggle="tab" href="#review">REVIEW</a></li>
+                                <li><a data-toggle="tab" href="#review">REVIEW</a></li>
+								<li><a data-toggle="tab" href="#tags">Comments</a></li>
+
 							</ul><!-- /.nav-tabs #product-tabs -->
 						</div>
 						<div class="col-sm-9">
@@ -315,8 +317,13 @@
 											</div><!-- /.reviews -->
 										</div><!-- /.product-reviews -->
                                     @endforeach
-                                    </div><!-- /.product-tab -->
+							        </div><!-- /.product-tab -->
+                                </div><!-- /.tab-pane -->
 
+                                <div id="tags" class="tab-pane">
+									<div class="product-tag">
+                                        <div class="fb-comments" data-href="{{ Request::url() }}" data-numposts="10"></div>
+									</div><!-- /.product-tab -->
 								</div><!-- /.tab-pane -->
 
 							</div><!-- /.tab-content -->
@@ -416,4 +423,7 @@
 </div><!-- /.body-content -->
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=157782379562934&autoLogAppEvents=1" nonce="WhS30MCS"></script>
+
+ {{-- // share products  --}}
+ <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=609aecbaf811a40018fa1e32&product=inline-share-buttons" data-href="{{ Request::url() }}" async="async"></script>
 @endsection
