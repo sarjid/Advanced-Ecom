@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\orderMail;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -81,6 +82,11 @@ class StripeController extends Controller
                 'price' => $cart->price,
                 'created_at' => Carbon::now(),
             ]);
+        }
+
+        //product stock decrement
+        foreach($carts as $pro){
+            Product::where('id',$pro->id)->decrement('product_qty',$pro->qty);
         }
 
         if (Session::has('coupon')) {

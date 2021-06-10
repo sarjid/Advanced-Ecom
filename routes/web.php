@@ -7,11 +7,15 @@ Use App\Http\Controllers\Admin\BrandController;
 Use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductReviewController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ShippingAreaController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\StockController;
+use App\Http\Controllers\Admin\SubadminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Fontend\CartController;
 use App\Http\Controllers\Fontend\SearchController;
@@ -30,7 +34,7 @@ Route::get('/', [IndexController::class,'index']);
 Auth::routes();
 
 // ====================================== Admin Routes =====================================
-Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Admin'], function(){
+Route::group(['prefix'=>'admin','middleware' =>['admin','auth','permission']], function(){
     Route::get('dashboard',[AdminController::class,'index'])->name('admin.dashboard');
     //profile
     Route::get('profile',[AdminController::class,'profile'])->name('profile');
@@ -145,12 +149,18 @@ Route::group(['prefix'=>'admin','middleware' =>['admin','auth'],'namespace'=>'Ad
     Route::get('review-delete/{review_id}',[ProductReviewController::class,'destroy']);
     Route::get('review-approve/{review_id}',[ProductReviewController::class,'approveNow']);
 
-
-
+    //stock management
+    Route::get('product-stock',[StockController::class,'index'])->name('product.stock');
+    Route::get('product-stock/edit/{id}',[StockController::class,'edit'])->name('stock.edit');
+    Route::post('product-stock/update/{id}',[StockController::class,'update'])->name('stock.update');
+    //role & permission
+    Route::resource('role', RoleController::class);
+    Route::resource('permission', PermissionController::class);
+    Route::resource('subadmin', SubadminController::class);
 });
 
 // ====================================== User Routes =====================================
-Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User'], function(){
+Route::group(['prefix'=>'user','middleware' =>['user','auth']], function(){
     Route::get('dashboard',[UserController::class,'index'])->name('user.dashboard');
     Route::post('update/data',[UserController::class,'updateData'])->name('update-profile');
     Route::get('image',[UserController::class,'imagePage'])->name('user-image');
@@ -175,7 +185,6 @@ Route::group(['prefix'=>'user','middleware' =>['user','auth'],'namespace'=>'User
     Route::post('return/orders-submit',[UserController::class,'returnOrderSubmit'])->name('user-return-order');
     Route::get('return/orders',[UserController::class,'returnOrder'])->name('return-orders');
     Route::get('cancel/orders',[UserController::class,'cancelOrder'])->name('cancel-orders');
-
 
     //product review
     Route::get('review-create/{product_id}',[ReviewController::class,'create']);

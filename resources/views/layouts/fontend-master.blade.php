@@ -661,6 +661,8 @@
 //End add to cart product
 </script>
 
+@yield('scripts')
+
 <script>
     function miniCart(){
         $.ajax({

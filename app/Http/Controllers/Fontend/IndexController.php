@@ -67,10 +67,42 @@ class IndexController extends Controller
     }
 
     //subcategory wise product show
-    public function subCatWiseProduct($subcat_id,$slug){
-        $products = Product::where('status',1)->where('subcategory_id',$subcat_id)->orderBy('id','DESC')->paginate(1);
+    public function subCatWiseProduct(Request $request,$subcat_id,$slug){
+
         $categories = Category::orderBy('category_name_en','ASC')->get();
-        return view('fontend.sub-category-product',compact('products','categories'));
+
+        $sort = '';
+        if ($request->sort != null) {
+             $sort = $request->sort;
+        }
+
+        if ($subcat_id == null) {
+            return view('errors.404');
+        }else {
+            if ($sort == 'priceLowtoHigh') {
+                $products = Product::where(['status' => 1,'subcategory_id' => $subcat_id])->orderBy('selling_price','ASC')->paginate(12);
+            }elseif ($sort == 'priceHightoLow') {
+                $products = Product::where(['status' => 1,'subcategory_id' => $subcat_id])->orderBy('selling_price','DESC')->paginate(12);
+            }elseif ($sort == 'nameAtoZ') {
+                $products = Product::where(['status' => 1,'subcategory_id' => $subcat_id])->orderBy('product_name_en','ASC')->paginate(12);
+            }elseif ($sort == 'nameZtoA') {
+                $products = Product::where(['status' => 1,'subcategory_id' => $subcat_id])->orderBy('product_name_en','DESC')->paginate(12);
+            }else {
+                $products = Product::where('status',1)->where('subcategory_id',$subcat_id)->orderBy('id','DESC')->paginate(3);
+            }
+        }
+        $subCatId = $subcat_id;
+        $subCatSlug = $slug;
+        $route = 'subcategory/product';
+
+        //loadmore product with ajax
+        if ($request->ajax()) {
+            $grid_view = view('fontend.inc.grid_view_product',compact('products'))->render();
+            $list_view = view('fontend.inc.list_view_product',compact('products'))->render();
+            return response()->json(['grid_view' => $grid_view,'list_view'=>$list_view]);
+        }
+
+        return view('fontend.sub-category-product',compact('products','categories','route','subCatId','subCatSlug','sort'));
     }
 
     //subsubcatgory wise product show

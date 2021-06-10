@@ -1,13 +1,12 @@
 @extends('layouts.admin-master')
 @section('admin-content')
-@section('products') active show-sub @endsection
-@section('manage-product') active @endsection
+@section('stock') active @endsection
 
      <!-- ########## START: MAIN PANEL ########## -->
      <div class="sl-mainpanel">
         <nav class="breadcrumb sl-breadcrumb">
           <a class="breadcrumb-item" href="index.html">SHopMama</a>
-          <span class="breadcrumb-item active">Products</span>
+          <span class="breadcrumb-item active">Stock Management</span>
         </nav>
 
         <div class="sl-pagebody">
@@ -23,8 +22,7 @@
                         <th class="wd-20p">Image</th>
                         <th class="wd-20p">Product Name English</th>
                         <th class="wd-20p">Product Price</th>
-                        <th class="wd-15p">Product Quantity</th>
-                        <th class="wd-5p">Product Discount</th>
+                        <th class="wd-15p">Product Stock</th>
                         <th class="wd-5p">Status</th>
                         <th class="wd-15p">Action</th>
                       </tr>
@@ -37,18 +35,10 @@
                         </td>
                         <td>{{ $item->product_name_en }}</td>
                         <td>{{ $item->selling_price }}$</td>
-                        <td>{{ $item->product_qty }}</td>
                         <td>
-                          @if ($item->discount_price == NULL)
-                          <span class="badge badge-pill badge-danger">No</span>
-                          @else
-                          @php
-                              $amount = $item->selling_price - $item->discount_price;
-                             $discount =  ( $amount/$item->selling_price) * 100;
-                          @endphp
-                             <span class="badge badge-pill badge-danger">{{ round($discount) }}%</span>
-                          @endif
+                            <span class="badge badge-pill badge-success">{{ $item->product_qty }}</span>
                         </td>
+
                         <td>
                           @if ($item->status == 1)
                               <span class="badge badge-pill badge-success">Active</span>
@@ -57,14 +47,9 @@
                           @endif
                         </td>
                         <td>
-                          <a href="{{ url('admin/product-edit/'.$item->id) }}" class="btn btn-sm btn-primary" title="edit data"> <i class="fa fa-eye"></i></a>
-                          @isset(auth()->user()->role->permission['permission']['product']['edit'])
-                          <a href="{{ url('admin/product-edit/'.$item->id) }}" class="btn btn-sm btn-primary" title="edit data"> <i class="fa fa-pencil"></i></a>
-                          @endisset
+                          <a href="{{ route('stock.edit',$item->id) }}" class="btn btn-sm btn-primary" title="edit data"> <i class="fa fa-pencil"></i></a>
 
-                          @isset(auth()->user()->role->permission['permission']['product']['delete'])
                           <a href="{{ url('admin/product-delete/'.$item->id) }}" class="btn btn-sm btn-danger" id="delete" title="delete data"><i class="fa fa-trash"></i></a>
-                          @endisset
 
                           @if ($item->status == 1)
                          <a href="{{ url('admin/product-inactive/'.$item->id) }}" class="btn btn-sm btn-danger" title="inactive"> <i class="fa fa-arrow-down"></i></a>
