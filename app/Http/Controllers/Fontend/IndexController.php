@@ -37,6 +37,9 @@ class IndexController extends Controller
     public function singleProduct($product_id,$slug){
         $product = Product::findOrFail($product_id);
 
+        $cat_id = $product->category_id;
+        $relatedProducts = Product::where('category_id',$cat_id)->where('id','!=',$product_id)->orderBy('id','DESC')->get();
+
         $color_en = $product->product_color_en;
         $product_color_en = explode(',',$color_en);
 

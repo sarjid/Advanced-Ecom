@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\SubadminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Fontend\CartController;
 use App\Http\Controllers\Fontend\SearchController;
+use App\Http\Controllers\Fontend\ShopController;
 use App\Http\Controllers\Fontend\TrackingController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\User\CartPageController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\WishlistController;
+use App\Http\Controllers\User\ChatController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -253,3 +255,16 @@ Route::post('order/track', [TrackingController::class,'orderTrackNow'])->name('o
  //search product
  Route::get('/search-products',[SearchController::class,'searchProduct'])->name('search.product');
  Route::post('/find-products',[SearchController::class,'findProducts']);
+
+ //shop
+ Route::get('shop',[ShopController::class,'shopPage'])->name('shop');
+ Route::post('shop-filter',[ShopController::class,'shopFilter'])->name('shop.filter');
+
+//user to buyer chat communication
+ Route::group(['middleware' =>'auth'], function(){
+    Route::post('send-message',[ChatController::class,'sendMsg'])->name('send.msg');
+    Route::get('my-chat',[ChatController::class,'chatPage'])->name('chat.page');
+    Route::get('/user-all',[ChatController::class,'getAllUsers'])->name('chat.users');
+    Route::get('/user-messages/{id}',[ChatController::class,'useMsgById'])->name('user.msg');
+   
+ });
