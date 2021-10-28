@@ -1,85 +1,92 @@
 <template>
   <div class="row">
     <div class="col-md-2 myUser">
-        <ul class="user">
-           <strong>Chat List</strong>
-           <hr>
-        <li v-for="(user,index) in users" :key="index"> 
+      <ul class="user">
+        <strong>Chat List</strong>
+        <hr />
+        <strong v-if="users == ''" class="text-danger">No Users Found..!</strong>
+        <li v-for="(user, index) in users" :key="index">
           <a href="" @click.prevent="userMessage(user.id)">
-            <img :src="'/'+user.image"
-              alt="UserImage"
-              class="userImg"
-            />
-            <span class="username text-center">{{user.name}}</span>
+            <img :src="'/' + user.image" alt="UserImage" class="userImg" />
+            <span class="username text-center">{{ user.name }}</span>
           </a>
         </li>
-
       </ul>
     </div>
     <div class="col-md-10" v-if="allmessages.user">
       <div class="card">
-        <div class="card-header text-center myrow" >
+        <div class="card-header text-center myrow">
           <strong> {{ allmessages.user.name }} </strong>
         </div>
-        <div class="card-body chat-msg">
-          <ul class="chat" v-for="(msg,index) in allmessages.messages" :key="index">
-
-           <li class="sender clearfix" v-if="allmessages.user.id === msg.sender_id">
+        <div class="card-body chat-msg" v-chat-scroll>
+          <ul
+            class="chat"
+            v-for="(msg, index) in allmessages.messages"
+            :key="index"
+          >
+            <li
+              class="sender clearfix"
+              v-if="allmessages.user.id === msg.sender_id"
+            >
               <span class="chat-img left clearfix mx-2">
-                <img :src="'/'+msg.user.image"
+                <img
+                  :src="'/' + msg.user.image"
                   class="userImg"
                   alt="userImg"
                 />
               </span>
               <div class="chat-body2 clearfix">
                 <div class="header clearfix">
-                  <strong class="primary-font">{{msg.user.name}}</strong>
+                  <strong class="primary-font">{{ msg.user.name }}</strong>
                   <small class="right text-muted">
-                   {{msg.created_at}}
+                    {{ moment(msg.created_at).format("LLL") }}
                   </small>
                   <!-- //if send with product id  -->
                   <div class="text-center" v-if="msg.product">
-                      {{ msg.product.product_name_en }}
-                  <img :src="'/'+msg.product.product_thambnail"
+                    {{ msg.product.product_name_en }}
+                    <img
+                      :src="'/' + msg.product.product_thambnail"
                       alt="productImg"
                       width="60px;"
                     />
                   </div>
                 </div>
 
-                <p>{{msg.msg}}</p>
+                <p>{{ msg.msg }}</p>
               </div>
             </li>
 
-        <!-- my part  -->
+            <!-- my part  -->
             <li class="buyer clearfix" v-else>
               <span class="chat-img right clearfix mx-2">
-                <img :src="'/'+msg.user.image"
+                <img
+                  :src="'/' + msg.user.image"
                   class="userImg"
                   alt="userImg"
                 />
-                 </span>
+              </span>
               <div class="chat-body clearfix">
                 <div class="header clearfix">
-                  <small class="left text-muted"
-                    >{{ msg.created_at }}</small>
+                  <small class="left text-muted">
+                    {{ moment(msg.created_at).format("LLL") }}
+                  </small>
                   <!-- <strong class="right primary-font">{{msg.user.name}}</strong> //my name   -->
-                   <div class="text-center" v-if="msg.product">
-                      {{ msg.product.product_name_en }}
-                  <img :src="'/'+msg.product.product_thambnail"
+                  <div class="text-center" v-if="msg.product">
+                    {{ msg.product.product_name_en }}
+                    <img
+                      :src="'/' + msg.product.product_thambnail"
                       alt="productImg"
                       width="60px;"
                     />
                   </div>
                 </div>
-              <p>{{msg.msg}}</p>
+                <p>{{ msg.msg }}</p>
               </div>
             </li>
-        
+
             <li class="sender clearfix">
               <span class="chat-img left clearfix mx-2"> </span>
             </li>
-
           </ul>
         </div>
         <div class="card-footer">
@@ -92,7 +99,9 @@
               placeholder="Type your message here..."
             />
             <span class="input-group-btn">
-              <button class="btn btn-primary" @click.prevent="sendMsg()">Send</button>
+              <button class="btn btn-primary" @click.prevent="sendMsg()">
+                Send
+              </button>
             </span>
           </div>
         </div>
@@ -100,91 +109,94 @@
     </div>
 
     <div class="gif" v-else>
-        <img src="/fontend/preview.gif" alt="userImg"/>
+      <img src="/fontend/preview.gif" alt="userImg" />
     </div>
-    
   </div>
 </template>
 
 <script>
+import moment from "moment";
 export default {
-   data() {
-       return {
-           users:{},
-           allmessages:{},
-           selectedUser:'',
-            msg:'',
-         
-       }
-   },
+  data() {
+    return {
+      users: {},
+      allmessages: {},
+      selectedUser: "",
+      msg: "",
+      moment: moment,
+    };
+  },
 
-   created() {
-       this.getAllUsers();
-   },
+  created() {
+    this.getAllUsers();
 
-   methods: {
-       //get all users
-       getAllUsers(){
-           axios.get('/user-all')
-           .then((res) => {
-               this.users = res.data;
-             
-           }).catch((err) => {
-               
-           });
-       },
+    setInterval(() => {
+      this.userMessage(this.selectedUser);
+    }, 2000);
+  },
 
-        //get Seldcted Users messages
-       userMessage(userId){
-          axios.get('/user-messages/'+userId)
-          .then((res) => {
-              this.allmessages = res.data;
-              this.selectedUser = userId;
-          }).catch((err) => {
-              
-          });
-       },
-
-        sendMsg(){
-        axios.post('/send-message',{receiver_id:this.selectedUser,msg:this.msg})
+  methods: {
+    //get all users
+    getAllUsers() {
+      axios
+        .get("/user-all")
         .then((res) => {
-            this.msg = "";
-            this.userMessage(this.selectedUser);
-            console.log(res.data);
-        }).catch((err) => {
-            this.errors = err.response.data.errors;
+          this.users = res.data;
+        })
+        .catch((err) => {});
+    },
+
+    //get Seldcted Users messages
+    userMessage(userId) {
+      axios
+        .get("/user-messages/" + userId)
+        .then((res) => {
+          this.allmessages = res.data;
+          this.selectedUser = userId;
+        })
+        .catch((err) => {});
+    },
+
+    sendMsg() {
+      axios
+        .post("/send-message", {
+          receiver_id: this.selectedUser,
+          msg: this.msg,
+        })
+        .then((res) => {
+          this.msg = "";
+          this.userMessage(this.selectedUser);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          this.errors = err.response.data.errors;
         });
-    }
-   },
-
-
+    },
+  },
 };
 </script>
 <style>
-
-
-.gif img{
-    width: 600px;
+.gif img {
+  width: 600px;
 }
 .username {
   color: #000;
 }
 
-.myrow{
-    background: #F3F3F3;
-    padding: 25px;
+.myrow {
+  background: #f3f3f3;
+  padding: 25px;
 }
 
-.myUser{
-     padding-top: 30px;
-     overflow-y: scroll;
-    height: 450px;
-    background: #F2F6FA;
+.myUser {
+  padding-top: 30px;
+  overflow-y: scroll;
+  height: 450px;
+  background: #f2f6fa;
 }
 .user li {
   list-style: none;
   margin-top: 20px;
- 
 }
 
 .user li a:hover {
@@ -216,7 +228,7 @@ export default {
 .chat-msg {
   overflow-y: scroll;
   height: 350px;
-  background: #F2F6FA;
+  background: #f2f6fa;
 }
 .chat-msg .chat-img {
   width: 50px;

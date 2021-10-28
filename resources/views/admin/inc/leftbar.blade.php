@@ -172,7 +172,12 @@
             <li class="nav-item"><a href="{{ route('subadmin.index') }}" class="nav-link @yield('all-subadmin')">All subadmin</a></li>
           </ul>
 
-
+          <a href="{{ route('admin.chat') }}" class="sl-menu-link @yield('chat')">
+            <div class="sl-menu-item">
+              <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
+              <span class="menu-item-label">chat</span>
+            </div><!-- menu-item -->
+          </a><!-- sl-menu-link -->
 
       </div><!-- sl-sideleft-menu -->
       <br>

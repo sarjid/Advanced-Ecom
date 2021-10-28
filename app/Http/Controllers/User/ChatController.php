@@ -67,6 +67,13 @@ class ChatController extends Controller
            abort(404);
        }
     }
+
+
+    //for admin panel
+    public function adminChatPage(){
+        return view('admin.chat.index');
+    }
+    
     
 
 }

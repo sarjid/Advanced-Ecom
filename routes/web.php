@@ -266,5 +266,8 @@ Route::post('order/track', [TrackingController::class,'orderTrackNow'])->name('o
     Route::get('my-chat',[ChatController::class,'chatPage'])->name('chat.page');
     Route::get('/user-all',[ChatController::class,'getAllUsers'])->name('chat.users');
     Route::get('/user-messages/{id}',[ChatController::class,'useMsgById'])->name('user.msg');
+    Route::get('/admin-chat',[ChatController::class,'adminChatPage'])->name('admin.chat');
+
+    
    
  });
