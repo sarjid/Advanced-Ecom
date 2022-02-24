@@ -16,7 +16,7 @@
     <div class="col-md-10" v-if="allmessages.user">
       <div class="card">
         <div class="card-header text-center myrow">
-          <strong> {{ allmessages.user.name }} </strong>
+          <strong> {{ allmessages.user.name }} </strong> 
         </div>
         <div class="card-body chat-msg" v-chat-scroll>
           <ul

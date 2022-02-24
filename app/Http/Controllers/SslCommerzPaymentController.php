@@ -361,6 +361,7 @@ class SslCommerzPaymentController extends Controller
 
     public function ipn(Request $request)
     {
+      
         #Received all the payement information from the gateway
         if ($request->input('tran_id')) #Check transation id is posted or not.
         {

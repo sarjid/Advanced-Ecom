@@ -58,7 +58,7 @@ class ChatController extends Controller
                 $q->where('sender_id',$userId);
                 $q->where('receiver_id',auth()->id());
            })->with(['user','product'])->get();
-
+         
            return response()->json([
                'user' => $user,
                'messages' => $messages,

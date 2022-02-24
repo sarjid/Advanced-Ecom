@@ -442,7 +442,19 @@
 
     <script src="{{ asset('backend') }}/lib/sweetalert/sweetalert.min.js"></script>
     <script src="{{ asset('backend') }}/lib/sweetalert/code.js"></script>
-
+    <script>
+        $(document).on("click", "#delete", function(e){
+            e.preventDefault();
+            var link = $(this).attr("href");
+            if(confirm("Are you sure you want to delete this?")){
+              alert('done0');
+            }
+            else{
+                return false;
+            }
+        })
+    
+    </script>
 </body>
 
 </html>

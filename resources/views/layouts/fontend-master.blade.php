@@ -80,7 +80,8 @@
                                 @auth
                                     <a href="{{ route('user.dashboard') }}"><i class="icon fa fa-lock"></i>My Profile</a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
                                         @csrf
                                     </form>
                                 @else
@@ -101,7 +102,8 @@
                                 <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span
                                         class="value">
                                         @if (session()->get('language') == 'bangla')
-                                        ভাষা পরিবর্তন করুন @else Language @endif
+                                        ভাষা পরিবর্তন করুন @else Language
+                                        @endif
                                     </span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     @if (session()->get('language') == 'bangla')
@@ -120,7 +122,8 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -166,8 +169,9 @@
                         <div class="search-area">
                             <form action="{{ route('search.product') }}" method="GET">
                                 <div class="control-group">
-                                    <input class="search-field" onfocus="showSearchResult()" onblur="hideSearchResult()"
-                                        name="search" id="search" placeholder="Search here..." />
+                                    <input class="search-field" onfocus="showSearchResult()"
+                                        onblur="hideSearchResult()" name="search" id="search"
+                                        placeholder="Search here..." />
                                     <button class="search-button"></button>
                                 </div>
                             </form>
@@ -185,11 +189,13 @@
                                     <div class="basket">
                                         <i class="glyphicon glyphicon-shopping-cart"></i>
                                     </div>
-                                    <div class="basket-item-count"><span class="count" id="cartQty"></span></div>
+                                    <div class="basket-item-count"><span class="count" id="cartQty"></span>
+                                    </div>
                                     <div class="total-price-basket">
                                         <span class="lbl">cart -</span>
                                         <span class="total-price">
-                                            <span class="sign">$</span><span class="value" id="cartSubTotal"></span>
+                                            <span class="sign">$</span><span class="value"
+                                                id="cartSubTotal"></span>
                                         </span>
                                     </div>
 
@@ -248,7 +254,8 @@
                                     <li class="active dropdown yamm-fw">
                                         <a href="home.html" data-hover="dropdown" class="dropdown-toggle"
                                             data-toggle="dropdown">
-                                        @if (session()->get('language') == 'bangla') হোম @else Home
+                                            @if (session()->get('language') == 'bangla')
+                                            হোম @else Home
                                             @endif
                                         </a>
                                     </li>
@@ -454,7 +461,8 @@
                                 <li><a href="#" title="Blog">Blog</a></li>
                                 <li><a href="#" title="Company">Company</a></li>
                                 <li><a href="#" title="Investor Relations">Investor Relations</a></li>
-                                <li class=" last"><a href="contact-us.html" title="Suppliers">Contact Us</a></li>
+                                <li class=" last"><a href="contact-us.html" title="Suppliers">Contact Us</a>
+                                </li>
                             </ul>
                         </div><!-- /.module-body -->
                     </div>
@@ -466,12 +474,14 @@
             <div class="container">
                 <div class="col-xs-12 col-sm-6 no-padding social">
                     <ul class="link">
-                        <li class="fb pull-left"><a target="_blank" rel="nofollow" href="#" title="Facebook"></a></li>
+                        <li class="fb pull-left"><a target="_blank" rel="nofollow" href="#" title="Facebook"></a>
+                        </li>
                         <li class="tw pull-left"><a target="_blank" rel="nofollow" href="#" title="Twitter"></a></li>
                         <li class="googleplus pull-left"><a target="_blank" rel="nofollow" href="#"
                                 title="GooglePlus"></a></li>
                         <li class="rss pull-left"><a target="_blank" rel="nofollow" href="#" title="RSS"></a></li>
-                        <li class="pintrest pull-left"><a target="_blank" rel="nofollow" href="#" title="PInterest"></a>
+                        <li class="pintrest pull-left"><a target="_blank" rel="nofollow" href="#"
+                                title="PInterest"></a>
                         </li>
                         <li class="linkedin pull-left"><a target="_blank" rel="nofollow" href="#" title="Linkedin"></a>
                         </li>
@@ -502,7 +512,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"><span id="pname"></span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        id="closeModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -577,7 +588,6 @@
         $.validate({
             lang: 'en'
         });
-
     </script>
     <script type="text/javascript" src="{{ asset('backend') }}/lib/toastr/toastr.min.js"></script>
 
@@ -588,21 +598,20 @@
             case 'info':
             toastr.info(" {{ Session::get('message') }} ");
             break;
-        
+
             case 'success':
             toastr.success(" {{ Session::get('message') }} ");
             break;
-        
+
             case 'warning':
             toastr.warning(" {{ Session::get('message') }} ");
             break;
-        
+
             case 'error':
             toastr.error(" {{ Session::get('message') }} ");
             break;
             }
         @endif
-
     </script>
 
     <script type="text/javascript">
@@ -717,7 +726,6 @@
             })
         }
         //End add to cart product
-
     </script>
 
     @yield('scripts')
@@ -734,24 +742,22 @@
                     var miniCart = ""
                     $.each(response.carts, function(key, value) {
                         miniCart += `<div class="cart-item product-summary">
-     <div class="row">
-      <div class="col-xs-4">
-       <div class="image">
-        <a href="detail.html"><img src="/${value.options.image}" alt=""></a>
-       </div>
-      </div>
-      <div class="col-xs-7">
-       <h3 class="name"><a href="index8a95.html?page-detail">${value.name}</a></h3>
-       <div class="price">${value.price}$ * ${value.qty}</div>
-      </div>
-      <div class="col-xs-1 action">
-       <button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)"><i class="fa fa-trash"></i></button>
-      </div>
-     </div>
-    </div><!-- /.cart-item -->
-    <div class="clearfix"></div> <hr>`
-
-                    });
+                    <div class="row">
+                    <div class="col-xs-4">
+                    <div class="image">
+                        <a href="detail.html"><img src="/${value.options.image}" alt=""></a>
+                    </div>
+                    </div>
+                    <div class="col-xs-7">
+                    <h3 class="name"><a href="index8a95.html?page-detail">${value.name}</a></h3>
+                    <div class="price">${value.price}$ * ${value.qty}</div>
+                    </div>
+                    <div class="col-xs-1 action">
+                    <button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)"><i class="fa fa-trash"></i></button>
+                    </div>
+                    </div>
+                    </div><!-- /.cart-item -->
+                    <div class="clearfix"></div> <hr>`});
 
                     $('#miniCart').html(miniCart);
 
@@ -792,7 +798,6 @@
             });
         }
         // mini cart remove end
-
     </script>
 
     <script>
@@ -826,7 +831,6 @@
                 }
             })
         }
-
     </script>
 
 
@@ -900,7 +904,6 @@
                 }
             });
         }
-
     </script>
     {{-- //end wishlist --}}
 
@@ -1028,7 +1031,6 @@
                 }
             });
         }
-
     </script>
     {{-- ================= end cart page ====================== --}}
     {{-- ===================== coupon apply start =============== --}}
@@ -1119,7 +1121,6 @@
             });
         }
         couponCalculation();
-
     </script>
     {{-- ===================== coupon apply end =============== --}}
     <script>
@@ -1157,7 +1158,6 @@
                 }
             });
         }
-
     </script>
 
     <!-- If you want to use the popup integration, -->
@@ -1189,7 +1189,6 @@
             window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload",
                 loader);
         })(window, document);
-
     </script>
 
     <script>
@@ -1205,7 +1204,6 @@
             window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload",
                 loader);
         })(window, document);
-
     </script>
 
     <script>
@@ -1226,7 +1224,6 @@
 
             if (searchData.length < 1) $('#suggestProduct').html("");
         })
-
     </script>
 
 
@@ -1238,7 +1235,6 @@
         function hideSearchResult() {
             $('#suggestProduct').slideUp();
         }
-
     </script>
 </body>
 
